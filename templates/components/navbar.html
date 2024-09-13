@@ -1,36 +1,67 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<style>
+    .navbar {
+        transition: background-color 0.3s, border 0.3s;
+    }
+
+    .navbar-dark {
+        background-color: #191919 !important;
+        color: white !important;
+        border-bottom: 1px solid #ffffff !important;
+    }
+    
+    .navbar-dark .dropdown-menu {
+        background-color: #272727;
+        color: white;
+    }
+
+    .navbar-dark .dropdown-item {
+        color: white;
+    }
+    .navbar-dark .dropdown-item:hover {
+        color: grey;
+    }
+
+    .navbar-dark .dropdown-item:hover {
+        background-color: #444444;
+    }
+
+</style>
+
+<nav class="navbar navbar-light w-100" style="background-color: #00000041; position: fixed; top: 0; z-index: 1000;">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
+        <div>
+            <a class="nav-link d-flex align-items-center" href="/login">
+                <img width="30" height="30" src="https://img.icons8.com/parakeet-line/ffffff/32/enter-2.png" alt="login"/>
+                <span class="d-none d-md-block">Login</span>
             </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </div>
+        <!-- <div class="dropdown">
+            <span class="navbar-brand dropdown" href="/" id="menuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-image: none;">
+                <img width="40" height="40" src="https://img.icons8.com/sf-black/ffffff/40/menu.png" alt="menu"/>
+            </span>
+            <ul class="dropdown-menu mt-3" aria-labelledby="menuDropdown">
+                <li><a class="dropdown-item" href="/">Home Page</a></li>
+                <li><a class="dropdown-item" href="/packages">Packages</a></li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
+        </div> -->
+        <a class="navbar-brand mx-auto text-white" href="/">
+            <h3>TripTrove</h3>
+        </a>
+        <div class="d-flex align-items-center">
+            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link ms-3" href="/packages">Packages</a>
+        </div>
     </div>
-  </nav>
+</nav>
+
+<script>
+    document.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        
+        if (window.scrollY > 50) {
+            navbar.classList.add('navbar-dark');
+        } else {
+            navbar.classList.remove('navbar-dark');
+        }
+    });
+</script>
