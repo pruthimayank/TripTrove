@@ -17,17 +17,19 @@
         border-bottom: 1px solid #ffffff !important;
     } 
 
-    .navbar-dark .dropdown-menu {
-        background-color: #272727;
-        color: white;
+    #dropdownMenu{
+        border-radius: 0;
+        background-color: #191919;
     }
 
-    .navbar-dark .dropdown-item {
-        color: white;
+    #dropdownMenu .dropdown-item {
+        color: white !important;
     }
 
-    .navbar-dark .dropdown-item:hover {
-        background-color: #444444;
+    #dropdownMenu .dropdown-item:hover {
+        color: black !important;
+        background-color: #ababab;
+        transition: 0.5s ease;
     }
 
     .menu-icon {
@@ -71,7 +73,7 @@
         transform: translateY(-20px);
     }
 </style>
-<nav class="navbar navbar-light w-100" style="background-color: #00000041; position: fixed; top: 0; z-index: 1000;">
+<nav class="navbar navbar-lightt w-100" style="background-color: #00000041; position: fixed; top: 0; z-index: 1000;">
     <div class="container-fluid">
         <div class="dropdown">
             <span class="navbar-brand dropdown" id="menuDropdown" role="button" aria-expanded="false" style="background-image: none;">
@@ -80,9 +82,9 @@
                     <img width="40" height="40" src="https://img.icons8.com/ios/40/ffffff/multiply.png" alt="close" class="icon close"/>
                 </div>
             </span>
-            <ul id="dropdownMenu" class="dropdown-menu mt-4 hide" aria-labelledby="menuDropdown">
-                <li><a class="dropdown-item" href="/">Home Page</a></li>
-                <li><a class="dropdown-item" href="/packages">Packages</a></li>
+            <ul id="dropdownMenu" class="dropdown-menu mt-4 p-0 hide" aria-labelledby="menuDropdown">
+                <li><a class="dropdown-item px-4 py-2" href="/">Home Page</a></li>
+                <li><a class="dropdown-item px-4 py-2" href="/packages">Packages</a></li>
             </ul>
         </div>
         <a class="navbar-brand mx-auto text-white" href="/">

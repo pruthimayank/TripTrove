@@ -38,7 +38,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 95%;
             object-fit: cover;
             z-index: -1; /* Keep video behind everything */
         }
@@ -89,7 +89,7 @@
 
     </style>
 </head>
-<body>
+<body style="background-color: #141414 !important; color: white;">
     {% include 'components/navbar.html' %}
 
     <main>
@@ -109,7 +109,7 @@
             </section>
 
             <!-- Section for city description (triggered by scroll) -->
-            <section class="section" id="city-description">
+            <section class="section border-bottom" id="city-description">
                 <div class="content fade-in">
                     <p>{{package.description}}</p>
                 </div>
@@ -118,17 +118,17 @@
         </div>
 
         <!-- New sections (after video ends) -->
-        <section class="normal-section">
+        <section class="normal-section border-bottom" style="background-color: #141414;">
             <p>This is a new section after the video ends.</p>
         </section>
 
-        <section class="normal-section">
+        <section class="normal-section" style="background-color: #141414;">
             <p>Here you can add more content as needed.</p>
         </section>
     </main>
 
+    
     {% include 'components/footer.html' %}
-
 </body>
 
 <script>
