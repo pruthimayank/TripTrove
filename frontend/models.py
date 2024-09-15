@@ -18,6 +18,7 @@ class agent(models.Model):
     phone=models.IntegerField(max_length=100)
     address=models.CharField(max_length=100)
     password=models.CharField(max_length=100)
+    bookinghistory=models.JSONField(max_length=100)
 
     def __str__(self):
         return f"{self.username}"
