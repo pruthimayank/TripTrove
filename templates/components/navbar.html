@@ -1,4 +1,3 @@
-
 <style>
     body, html {
         margin: 0;
@@ -20,6 +19,7 @@
     #dropdownMenu{
         border-radius: 0;
         background-color: #191919;
+        transform: translateY(10px);
     }
 
     #dropdownMenu .dropdown-item {
@@ -35,6 +35,7 @@
     .menu-icon {
         position: relative;
         cursor: pointer;
+        transform: translateY(-20px);
     }
 
     .menu-icon .icon {
@@ -82,19 +83,25 @@
                     <img width="40" height="40" src="https://img.icons8.com/ios/40/ffffff/multiply.png" alt="close" class="icon close"/>
                 </div>
             </span>
-            <ul id="dropdownMenu" class="dropdown-menu mt-4 p-0 hide" aria-labelledby="menuDropdown">
+            <ul id="dropdownMenu" class="dropdown-menu mt-4 ms-2 p-0 hide" aria-labelledby="menuDropdown">
                 <li><a class="dropdown-item px-4 py-2" href="/">Home Page</a></li>
-                <li><a class="dropdown-item px-4 py-2" href="/packages">Packages</a></li>
+                {% if login == 'loggedin' %}
+                    <li><a class="dropdown-item px-4 py-2" href="bookings/">Booking History</a></li>
+                {% endif %}
+                <li><a class="dropdown-item px-4 py-2" href="about/">About Us</a></li>
             </ul>
         </div>
         <a class="navbar-brand mx-auto text-white" href="/">
             <h3>TakeMeFar</h3>
         </a>
         <div>
-            <a class="nav-link" href="/login">
-                Login
-                <img width="32" height="32" src="https://img.icons8.com/parakeet-line/ffffff/32/enter-2.png" alt="login"/>
-            </a>
+            {% if login == 'loggedin' %}
+                <a class="nav-link" href="/logout">Logout</a>
+            {% else %}
+                <a class="nav-link" href="/login">
+                    Login
+                </a>
+            {% endif %}
         </div>
     </div>
 </nav>

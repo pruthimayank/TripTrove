@@ -11,6 +11,9 @@ def login(request):
             agent_instance = agent.objects.get(username=username)
             
             if password == agent_instance.password:
+                agent_data = agent.objects.filter(username=username)
+                request.session['user_data'] = list(agent_data.values())[0]
+                request.session['login'] = "loggedin"
                 return redirect('home') 
             else:
                 return render(request, 'login.html', {'error': 'Invalid password'})
@@ -38,22 +41,51 @@ def signup(request):
 
 # Home view
 def home(request):
+    # print(request.session.get('user_data'))
+    login = request.session.get('login')
+
     packages = Packages.objects.all()
     packages_list = list(packages.values())
-    data = {
-        'packages': packages_list
-    }
-    return render(request, 'home.html', data)
-
+    if login == 'loggedin':
+        data = {
+            'login': 'loggedin',
+            'packages': packages_list
+        }
+        return render(request, 'home.html', data)
+    else:
+        data = {
+            'login': 'notloggedin',
+            'packages': packages_list
+        }
+        return render(request, 'home.html', data)
 
 # Package detail view
 def package(request, package):
-    package = Packages.objects.filter(name=package).first()  # Get the first match
+    login = request.session.get('login')
 
-    if package:
-        data = {
-            'package': package
-        }
-        return render(request, 'package.html', data)
+    package = Packages.objects.filter(name=package).first()
+    if login == 'loggedin':
+        if package:
+            data = {
+                'login': 'loggedin',
+                'package': package
+            }
+            return render(request, 'package.html', data)
+        else:
+            return render(request, '404.html', {'error': 'Package not found'})
     else:
-        return render(request, '404.html', {'error': 'Package not found'})
+        if package:
+            data = {
+                'login': 'notloggedin',
+                'package': package
+            }
+            return render(request, 'package.html', data)
+        else:
+            return render(request, '404.html', {'error': 'Package not found'})
+
+    
+def bookings(request):
+    return render(request, 'bookings.html')
+
+def about(request):
+    return render(request, 'about.html')
