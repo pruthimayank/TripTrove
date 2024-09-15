@@ -83,9 +83,52 @@ def package(request, package):
         else:
             return render(request, '404.html', {'error': 'Package not found'})
 
+def packages(request):
+    login = request.session.get('login')
+    
+    packages = Packages.objects.all()
+    packages_list = list(packages.values())
+    if login == 'loggedin':
+        data={
+            'login': 'loggedin',
+            'packages': packages_list
+        }
+        return render(request, 'packages.html', data)
+    else:
+        data = {
+            'login': 'notloggedin',
+            'packages': packages_list
+        }
+        return render(request, 'packages.html', data)
     
 def bookings(request):
-    return render(request, 'bookings.html')
+    login = request.session.get('login')
+    
+    if login == 'loggedin':
+        data={
+            'login': 'loggedin'
+        }
+        return render(request, 'bookings.html', data)
+    else:
+        data = {
+            'login': 'notloggedin'
+        }
+        return render(request, 'bookings.html', data)
 
 def about(request):
-    return render(request, 'about.html')
+    login = request.session.get('login')
+    
+    if login == 'loggedin':
+        data={
+            'login': 'loggedin'
+        }
+        return render(request, 'about.html', data)
+    else:
+        data = {
+            'login': 'notloggedin'
+        }
+        return render(request, 'about.html', data)
+    
+def logout(request):
+    request.session.flush()
+    return redirect('login')
