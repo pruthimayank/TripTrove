@@ -17,7 +17,7 @@ class agent(models.Model):
     lastname=models.CharField(max_length=100)
     email=models.EmailField(max_length=100)
     phone=models.IntegerField(null=True,blank=True)
-    address=models.CharField(max_length=100)
+    address=models.CharField(max_length=500)
     password=models.CharField(max_length=100)
     bookinghistory=models.JSONField(max_length=100,null=True,blank=True)
 
