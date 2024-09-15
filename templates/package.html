@@ -129,30 +129,29 @@
 
     
     {% include 'components/footer.html' %}
+    <script>
+        // Select the elements we want to animate
+        const fadeInElements = document.querySelectorAll('.fade-in');
+
+        // Function to trigger the fade-in effect when scrolling
+        function handleScroll() {
+            fadeInElements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                // Check if the element is in the viewport
+                if (elementPosition < windowHeight - 100) {
+                    element.classList.add('active');
+                } else {
+                    element.classList.remove('active');
+                }
+            });
+        }
+
+        // Run on scroll and load
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('load', handleScroll);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
-
-<script>
-    // Select the elements we want to animate
-    const fadeInElements = document.querySelectorAll('.fade-in');
-
-    // Function to trigger the fade-in effect when scrolling
-    function handleScroll() {
-        fadeInElements.forEach(element => {
-            const elementPosition = element.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
-
-            // Check if the element is in the viewport
-            if (elementPosition < windowHeight - 100) {
-                element.classList.add('active');
-            } else {
-                element.classList.remove('active');
-            }
-        });
-    }
-
-    // Run on scroll and load
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('load', handleScroll);
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>
