@@ -92,10 +92,61 @@
             border: none;
             border-radius: 5px;
             margin-top: 20px;
+            cursor: not-allowed; /* Default state with disabled cursor */
+        }
+
+        /* Enabled button styling */
+        .btn-checkout.enabled {
+            cursor: pointer; /* Pointer cursor when button is enabled */
         }
 
         /* Disabled button styling */
         .btn-checkout:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* Modal custom styling */
+        .modal-content {
+            background: rgba(68, 67, 67, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Make text inside modal black */
+        .modal-body, .modal-header, .modal-body input, .modal-body select, .modal-footer {
+            color: black;
+        }
+
+        /* Input fields styling */
+        .modal-body input, .modal-body select {
+            background: rgba(255, 255, 255, 0.8);
+            color: black;
+            border-radius: 5px;
+            border: none;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .modal-body input::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Submit button in modal */
+        .btn-confirm {
+            background-color: #007bff;
+            color: white;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+        }
+
+        /* Disabled button styling */
+        .btn-confirm:disabled {
             background-color: #cccccc;
             cursor: not-allowed;
         }
@@ -133,14 +184,13 @@
 
 {% block content %}
 <div>
+    <!-- Section 1 -->
     <section class="section" style="background-image: url('https://www.tourism.rajasthan.gov.in/content/dam/rajasthan-tourism/english/city/explore/BadiLakeUdaipur.jpg');">
         <div class="container d-flex justify-content-between align-items-center">
-            <!-- Left Side Text -->
             <div class="text-container">
                 <h1>Let India's wonders unfold before your eyes</h1>
                 <h3>Trust your vacation to our travel experts & experience an unforgettable journey</h3>
             </div>
-            <!-- Right Side Form -->
             <div class="form-section">
                 <h4>Book Your Slot</h4>
                 <form id="booking-form">
@@ -171,144 +221,66 @@
                         <label class="form-check-label" for="termsCheck">I accept the <a href="#">terms and conditions</a></label>
                     </div>
 
-                    <button type="button" class="btn btn-checkout" id="checkoutButton" disabled>Checkout</button>
+                    <button type="button" class="btn btn-checkout" id="checkoutButton" data-bs-toggle="modal" data-bs-target="#checkoutModal" disabled>Checkout</button>
                 </form>
             </div>
         </div>
     </section>
-        <!-- Section 2 -->
-        <section id="section2" class="section" style="background-image: url('https://jaipurtourism.co.in/images/places-to-visit/header/jal-mahal-jaipur-entry-fee-timings-holidays-reviews-header.jpg');">
-           <div class="container d-flex justify-content-between align-items-center">
-            <div class="text-container">
-            <h1>Explore the Majestic Jaipur</h1>
-            <h3>Discover the Pink City and immerse yourself in history</h3>
-            </div>
-            <!-- Booking Form -->
-            <div class="form-section">
-                <h4>Book Your Slot</h4>
-                <form id="booking-form">
-                    <div class="mb-3">
-                        <label for="slot-selection" class="form-label">Pick Your Slot</label>
-                        <select id="slot-selection" name="slot-selection" class="form-select" required>
-                            <option value="slot1">Slot 1: 9:00 AM - 12:00 PM</option>
-                            <option value="slot2">Slot 2: 12:00 PM - 3:00 PM</option>
-                            <option value="slot3">Slot 3: 3:00 PM - 6:00 PM</option>
-                        </select>
-                    </div>
-    
-                    <div class="mb-3">
-                        <label for="guest-count" class="form-label">Number of Guests</label>
-                        <div class="input-group guest-counter">
-                            <button type="button" class="btn btn-outline-secondary" onclick="updateGuestCount(-1)">-</button>
-                            <input type="number" id="guest-count" name="guest-count" class="form-control text-center" value="1" min="1" readonly>
-                            <button type="button" class="btn btn-outline-secondary" onclick="updateGuestCount(1)">+</button>
+
+    <!-- Repeat other sections here (similar to Section 1) -->
+
+    <!-- Modal Structure -->
+    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="checkoutModalLabel">Confirm Your Booking</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <form id="confirm-booking-form">
+                        <div class="mb-3">
+                            <label for="first-name" class="form-label">First Name</label>
+                            <input type="text" id="first-name" name="first-name" class="form-control" placeholder="Enter your first name" required>
                         </div>
-                    </div>
-    
-                    <div class="total-amount">
-                        Total: ₹<span id="total-amount">5000</span>
-                    </div>
-    
-                    <div class="form-check mt-3">
-                        <input class="form-check-input" type="checkbox" id="termsCheck" onchange="toggleCheckoutButton()">
-                        <label class="form-check-label" for="termsCheck">I accept the <a href="#">terms and conditions</a></label>
-                    </div>
-    
-                    <button type="button" class="btn btn-checkout" id="checkoutButton" disabled>Checkout</button>
-                </form>
-            </div>
-           </div>
-        </section>
-    
-        <!-- Section 3 -->
-        <section id="section3" class="section" style="background-image: url('https://media2.thrillophilia.com/images/photos/000/144/449/original/1569332290_shutterstock_559493374.jpg?gravity=center&width=1280&height=642&crop=fill&quality=auto&fetch_format=auto&flags=strip_profile&format=jpg&sign_url=true');">
-            <div class="container d-flex justify-content-between align-items-center"> 
-            <div class="text-container">
-            <h1>Experience Udaipur's Tranquility</h1>
-            <h3>Let the Lake City soothe your soul</h3>
-            </div>
-            <!-- Booking Form -->
-            <div class="form-section">
-                <h4>Book Your Slot</h4>
-                <form id="booking-form">
-                    <div class="mb-3">
-                        <label for="slot-selection" class="form-label">Pick Your Slot</label>
-                        <select id="slot-selection" name="slot-selection" class="form-select" required>
-                            <option value="slot1">Slot 1: 9:00 AM - 12:00 PM</option>
-                            <option value="slot2">Slot 2: 12:00 PM - 3:00 PM</option>
-                            <option value="slot3">Slot 3: 3:00 PM - 6:00 PM</option>
-                        </select>
-                    </div>
-    
-                    <div class="mb-3">
-                        <label for="guest-count" class="form-label">Number of Guests</label>
-                        <div class="input-group guest-counter">
-                            <button type="button" class="btn btn-outline-secondary" onclick="updateGuestCount(-1)">-</button>
-                            <input type="number" id="guest-count" name="guest-count" class="form-control text-center" value="1" min="1" readonly>
-                            <button type="button" class="btn btn-outline-secondary" onclick="updateGuestCount(1)">+</button>
+
+                        <div class="mb-3">
+                            <label for="last-name" class="form-label">Last Name</label>
+                            <input type="text" id="last-name" name="last-name" class="form-control" placeholder="Enter your last name" required>
                         </div>
-                    </div>
-    
-                    <div class="total-amount">
-                        Total: ₹<span id="total-amount">5000</span>
-                    </div>
-    
-                    <div class="form-check mt-3">
-                        <input class="form-check-input" type="checkbox" id="termsCheck" onchange="toggleCheckoutButton()">
-                        <label class="form-check-label" for="termsCheck">I accept the <a href="#">terms and conditions</a></label>
-                    </div>
-    
-                    <button type="button" class="btn btn-checkout" id="checkoutButton" disabled>Checkout</button>
-                </form>
-            </div>
-            </div>
-        </section>
-    
-        <!-- Section 4 -->
-        <section id="section4" class="section" style="background-image: url('https://vl-prod-static.b-cdn.net/system/images/000/746/268/4aa634e7788f54c28a743380aca22013/x1200gt/2091.jpg');">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div class="text-container">
-            <h1>The Golden Sands of Jaisalmer</h1>
-            <h3>Uncover the beauty of the Thar Desert</h3>
-            </div>
-            <!-- Booking Form -->
-            <div class="form-section">
-                <h4>Book Your Slot</h4>
-                <form id="booking-form">
-                    <div class="mb-3">
-                        <label for="slot-selection" class="form-label">Pick Your Slot</label>
-                        <select id="slot-selection" name="slot-selection" class="form-select" required>
-                            <option value="slot1">Slot 1: 9:00 AM - 12:00 PM</option>
-                            <option value="slot2">Slot 2: 12:00 PM - 3:00 PM</option>
-                            <option value="slot3">Slot 3: 3:00 PM - 6:00 PM</option>
-                        </select>
-                    </div>
-    
-                    <div class="mb-3">
-                        <label for="guest-count" class="form-label">Number of Guests</label>
-                        <div class="input-group guest-counter">
-                            <button type="button" class="btn btn-outline-secondary" onclick="updateGuestCount(-1)">-</button>
-                            <input type="number" id="guest-count" name="guest-count" class="form-control text-center" value="1" min="1" readonly>
-                            <button type="button" class="btn btn-outline-secondary" onclick="updateGuestCount(1)">+</button>
+
+                        <div class="mb-3">
+                            <label for="modal-slot-selection" class="form-label">Slot Start and End</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <select id="modal-slot-start" name="slot-start" class="form-select">
+                                        <option value="9:00 AM">9:00 AM</option>
+                                        <option value="12:00 PM">12:00 PM</option>
+                                        <option value="3:00 PM">3:00 PM</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <select id="modal-slot-end" name="slot-end" class="form-select">
+                                        <option value="12:00 PM">12:00 PM</option>
+                                        <option value="3:00 PM">3:00 PM</option>
+                                        <option value="6:00 PM">6:00 PM</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-    
-                    <div class="total-amount">
-                        Total: ₹<span id="total-amount">5000</span>
-                    </div>
-    
-                    <div class="form-check mt-3">
-                        <input class="form-check-input" type="checkbox" id="termsCheck" onchange="toggleCheckoutButton()">
-                        <label class="form-check-label" for="termsCheck">I accept the <a href="#">terms and conditions</a></label>
-                    </div>
-    
-                    <button type="button" class="btn btn-checkout" id="checkoutButton" disabled>Checkout</button>
-                </form>
+
+                        <div class="mb-3">
+                            <label for="modal-total-amount" class="form-label">Total Amount</label>
+                            <input type="text" id="modal-total-amount" name="total-amount" class="form-control" value="5000">
+                        </div>
+
+                        <button type="submit" class="btn btn-confirm">Confirm Booking</button>
+                    </form>
+                </div>
             </div>
         </div>
-        </section>
-    <!-- Additional sections with the same structure go here -->
-
+    </div>
 </div>
 {% endblock %}
 
@@ -331,6 +303,79 @@
         const termsCheck = document.getElementById('termsCheck');
         const checkoutButton = document.getElementById('checkoutButton');
         checkoutButton.disabled = !termsCheck.checked;
+
+        // Toggle between not-allowed and pointer cursor
+        if (termsCheck.checked) {
+            checkoutButton.classList.add('enabled');
+        } else {
+            checkoutButton.classList.remove('enabled');
+        }
     }
+
+    // Update Modal Form with Slot and Amount from Main Form
+    document.getElementById('checkoutButton').addEventListener('click', function() {
+        const totalAmount = document.getElementById('total-amount').textContent;
+        document.getElementById('modal-total-amount').value = totalAmount;
+    });
+
+    // Function to get CSRF token from cookies
+function getCSRFToken() {
+    let csrfToken = null;
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith('csrftoken=')) {
+            csrfToken = cookie.substring('csrftoken='.length);
+            break;
+        }
+    }
+    return csrfToken;
+}
+
+document.getElementById('confirm-booking-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    console.log("Booking form submitted");
+
+    const bookingData = {
+        first_name: document.getElementById('first-name').value,
+        last_name: document.getElementById('last-name').value,
+        slot_start: document.getElementById('modal-slot-start').value,
+        slot_end: document.getElementById('modal-slot-end').value,
+        total_amount: document.getElementById('modal-total-amount').value,
+    };
+
+    console.log("Booking data:", bookingData);
+
+    // Send JSON data to the server
+    fetch('/booking/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCSRFToken(),  // Fetch CSRF token here
+        },
+        body: JSON.stringify(bookingData),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Server response:", data);
+        if (data.status === 'success') {
+            // Redirect to the bookings page with a success flag
+            window.location.href = '/bookings/?success=true';
+        } else {
+            console.error('Booking failed:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+
+
+
 </script>
 {% endblock %}

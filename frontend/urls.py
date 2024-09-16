@@ -10,4 +10,5 @@ urlpatterns = [
     path('packages/', views.packages, name='packages'),
     path('bookings/', views.bookings, name='bookings'),
     path('about/', views.about, name='about'),
+    path('booking/', views.handle_booking, name='handle_booking'),  # Add the booking route
 ]
