@@ -1,5 +1,10 @@
 <head>
     <title>Package</title>
+</head>
+{% extends 'base.html' %}
+
+{% load static %}
+{% block additional_css %}
     <style>
         /* Container for the video background */
         .video-container {
@@ -60,100 +65,99 @@
             height: 100vh; /* Full viewport height */
         }
     </style>
-</head>
-{% extends 'base.html' %}
+{% endblock %}
 
 {% block content %}
-<main>
-    <div class="video-container">
-        <video autoplay muted loop id="background-video">
-            <source src="{{package.video}}" type="video/mp4">
-        </video>
-
-        <section class="section" id="city-name">
-            <div class="overlay"></div>
-            <h1 class="fade-in">{{package.name}}</h1>
-        </section>
-
-        <section class="section" id="city-description">
-            <div class="overlay"></div>
-            <p class="fade-in">{{package.description}}</p>
-        </section>
-    </div>
-
-    <div>
-        <section class="normal-section border-bottom" style="overflow: hidden;">
-            <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=1');">
-                <div class="col text-center">
-                    <h1>Welcome to Section 3</h1>
-                    <p>This is an amazing place to showcase something cool.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="normal-section border-bottom" style="overflow: hidden;">
-            <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=2');">
-                <div class="col text-center">
-                    <h1>Welcome to Section 4</h1>
-                    <p>This is an amazing place to showcase something cool.</p>
-                </div>
-            </div>
-        </section>
-
-        <div class="video-container2">
+    <main>
+        <div class="video-container">
             <video autoplay muted loop id="background-video">
                 <source src="{{package.video}}" type="video/mp4">
             </video>
-    
+
             <section class="section" id="city-name">
                 <div class="overlay"></div>
                 <h1 class="fade-in">{{package.name}}</h1>
             </section>
+
+            <section class="section" id="city-description">
+                <div class="overlay"></div>
+                <p class="fade-in">{{package.description}}</p>
+            </section>
         </div>
 
-        <section class="normal-section border-bottom" style="overflow: hidden;">
-            <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=3');">
-                <div class="col text-center">
-                    <h1>Welcome to Section 5</h1>
-                    <p>This is an amazing place to showcase something cool.</p>
+        <div>
+            <section class="normal-section border-bottom" style="overflow: hidden;">
+                <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=1');">
+                    <div class="col text-center">
+                        <h1>Welcome to Section 3</h1>
+                        <p>This is an amazing place to showcase something cool.</p>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="normal-section border-bottom" style="overflow: hidden;">
-            <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=4);">
-                <div class="col text-center">
-                    <h1>Welcome to Section 6</h1>
-                    <p>This is an amazing place to showcase something cool.</p>
+            <section class="normal-section border-bottom" style="overflow: hidden;">
+                <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=2');">
+                    <div class="col text-center">
+                        <h1>Welcome to Section 4</h1>
+                        <p>This is an amazing place to showcase something cool.</p>
+                    </div>
                 </div>
+            </section>
+
+            <div class="video-container2">
+                <video autoplay muted loop id="background-video">
+                    <source src="{{package.video}}" type="video/mp4">
+                </video>
+        
+                <section class="section" id="city-name">
+                    <div class="overlay"></div>
+                    <h1 class="fade-in">{{package.name}}</h1>
+                </section>
             </div>
-        </section>
-    </div>
-</main>
+
+            <section class="normal-section border-bottom" style="overflow: hidden;">
+                <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=3');">
+                    <div class="col text-center">
+                        <h1>Welcome to Section 5</h1>
+                        <p>This is an amazing place to showcase something cool.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="normal-section border-bottom" style="overflow: hidden;">
+                <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=4);">
+                    <div class="col text-center">
+                        <h1>Welcome to Section 6</h1>
+                        <p>This is an amazing place to showcase something cool.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
 {% endblock %}
 
 {% block additional_js %}
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script>
-    const zoomSections = document.querySelectorAll('.zoom');
-    const maxScale = 2; // Maximum scale value
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script>
+        const zoomSections = document.querySelectorAll('.zoom');
+        const maxScale = 2; // Maximum scale value
 
-    window.addEventListener('scroll', () => {
-        const scrollPosition = window.scrollY;
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
 
-        zoomSections.forEach((section) => {
-            const sectionOffset = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const isInViewport = scrollPosition + window.innerHeight > sectionOffset && scrollPosition < sectionOffset + sectionHeight;
+            zoomSections.forEach((section) => {
+                const sectionOffset = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const isInViewport = scrollPosition + window.innerHeight > sectionOffset && scrollPosition < sectionOffset + sectionHeight;
 
-            if (isInViewport) {
-                const scaleValue = Math.min(maxScale, 1 + (scrollPosition - sectionOffset + window.innerHeight) / (sectionHeight * 2));
-                section.style.transform = `scale(${scaleValue})`;
-            } else {
-                section.style.transform = `scale(1)`;
-            }
+                if (isInViewport) {
+                    const scaleValue = Math.min(maxScale, 1 + (scrollPosition - sectionOffset + window.innerHeight) / (sectionHeight * 2));
+                    section.style.transform = `scale(${scaleValue})`;
+                } else {
+                    section.style.transform = `scale(1)`;
+                }
+            });
         });
-    });
-</script>
+    </script>
 {% endblock %}
