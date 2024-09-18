@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Packages, agent  
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 # Login view
 def login(request):
@@ -117,19 +120,17 @@ def packages(request):
 def bookings(request):
     user = request.session.get('user_data')
     login = request.session.get('login')
-    
-    if login == 'loggedin':
-        data={
-            'user': request.session.get('user_data'),
-            'login': 'loggedin'
-        }
-        return render(request, 'bookings.html', data)
+
+    if login == 'loggedin' and user:
+        booking_success = request.GET.get('success') == 'true'
+        return render(request, 'bookings.html', {
+            'user': user,
+            'login': login,
+            'booking_success': booking_success
+        })
     else:
-        data = {
-            'user': request.session.get('user_data'),
-            'login': 'notloggedin'
-        }
-        return render(request, 'bookings.html', data)
+        return redirect('login')
+
 
 def about(request):
     user = request.session.get('user_data')
@@ -151,3 +152,40 @@ def about(request):
 def logout(request):
     request.session.flush()
     return redirect('login')
+
+
+#rest
+@csrf_exempt
+def handle_booking(request):
+    if request.method == 'POST':
+        try:
+            print(f"Request body: {request.body}")  # Print the entire request body for debugging
+            data = json.loads(request.body)  # Attempt to parse the JSON payload
+
+            # Extract fields from the parsed JSON
+            first_name = data.get('first_name')
+            last_name = data.get('last_name')
+            slot_start = data.get('slot_start')
+            slot_end = data.get('slot_end')
+            total_amount = data.get('total_amount')
+
+            # Debug: Ensure data is correctly parsed
+            print(f"First Name: {first_name}, Last Name: {last_name}, Slot Start: {slot_start}, Slot End: {slot_end}, Total Amount: {total_amount}")
+
+            if not (first_name and last_name and slot_start and slot_end and total_amount):
+                return JsonResponse({'status': 'error', 'message': 'Missing required fields'}, status=400)
+
+            # Handle booking logic...
+            # For example, save to session or database
+
+            return JsonResponse({'status': 'success', 'message': 'Booking confirmed'})
+
+        except json.JSONDecodeError as e:
+            print(f"JSON decode error: {e}")  # Print the error
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON format'}, status=400)
+
+        except Exception as e:
+            print(f"Error: {e}")  # Catch all other errors and print them
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
