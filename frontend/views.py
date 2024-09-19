@@ -96,7 +96,6 @@ def package(request, package):
         else:
             return render(request, '404.html', {'error': 'Package not found'})
 
-# Packages view
 def packages(request):
     user = request.session.get('user_data')
     login = request.session.get('login')
@@ -117,7 +116,7 @@ def packages(request):
             'packages': packages_list
         }
         return render(request, 'packages.html', data)
-
+    
 def bookings(request):
     user = request.session.get('user_data')
     login = request.session.get('login')
@@ -133,7 +132,6 @@ def bookings(request):
         return redirect('login')
 
 
-# About view
 def about(request):
     user = request.session.get('user_data')
     login = request.session.get('login')
@@ -151,10 +149,12 @@ def about(request):
         }
         return render(request, 'about.html', data)
     
-# Logout view
 def logout(request):
     request.session.flush()
     return redirect('login')
+
+
+#rest
 @csrf_exempt
 def handle_booking(request):
     if request.method == 'POST':

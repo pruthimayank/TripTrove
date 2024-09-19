@@ -3,12 +3,17 @@
 </head>
 {% extends 'base.html' %}
 
+{% load static %}
 {% block additional_css %}
     <style>
         /* Container for the video background */
         .video-container {
             position: relative;
             height: 200vh; /* To cover both sections */
+        }
+        .video-container2 {
+            position: relative;
+            height: 100vh; /* To cover both sections */
         }
 
         /* Background video settings */
@@ -22,7 +27,6 @@
             z-index: -1; /* Keep video behind everything */
         }
 
-        /* Section styling */
         .section {
             position: relative;
             height: 100vh;
@@ -31,58 +35,11 @@
             align-items: center;
             color: white;
             text-align: center;
-            font-family: Arial, sans-serif;
             z-index: 1; /* Ensure text is on top of video */
+            overflow: hidden; /* Prevent overflow */
         }
 
-        .normal-section {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #141414;
-            color: white;
-            font-size: 1.5em;
-        }
-
-        .section3, .section4, .section5, .section6 {
-            width: 100%; /* Make the section full width */
-            height: 100vh; /* Full viewport height */
-            background-size: cover; /* Make the background cover the entire section */
-            background-position: center; /* Center the background image */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transform: scale(1); /* Start at normal scale */
-            transition: transform 0.5s ease; /* Smooth scaling */
-            color: white;
-            text-align: center;
-        }
-
-        .section3 {
-            background-image: url('https://picsum.photos/800/400?random=1'); /* Set the background image */
-        }
-
-        .section4 {
-            background-image: url('https://picsum.photos/800/400?random=2');
-        }
-
-        .section5 {
-            background-image: url('https://picsum.photos/800/400?random=3');
-        }
-
-        .section6 {
-            background-image: url('https://picsum.photos/800/400?random=4');
-        }
-
-        .section3 h1, .section3 p, .section4 h1, .section4 p, .section5 h1, .section5 p, .section6 h1, .section6 p {
-            margin: 0;
-            padding: 0;
-            z-index: 1; /* Ensure text stays on top */
-        }
-
-        .section3::before, .section4::before, .section5::before, .section6::before {
-            content: '';
+        .overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -92,136 +49,115 @@
             z-index: 0;
         }
 
-        .section3-content, .section4-content, .section5-content, .section6-content {
-            position: relative;
-            z-index: 1; /* Ensure text appears on top of the image */
-        }
-
-        /* Text styles */
         h1, p {
             margin: 0;
             padding: 0;
-            color: white;
-        }
-
-        .section h1 {
-            font-size: 3em;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        .section p {
-            font-size: 1.5em;
-            max-width: 600px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        .zoom {
+            transition: transform 0.2s ease;
+        }
+
+        .section-bg {
+            background-size: cover;
+            background-position: center;
+            height: 100vh; /* Full viewport height */
         }
     </style>
 {% endblock %}
 
 {% block content %}
-<main>
-    <!-- Video Container -->
-    <div class="video-container">
-        <!-- Video Background (only for the first two sections) -->
-        <video autoplay muted loop id="background-video">
-            <source src="{{package.video}}" type="video/mp4">
-        </video>
+    <main>
+        <div class="video-container">
+            <video autoplay muted loop id="background-video">
+                <source src="{{package.video}}" type="video/mp4">
+            </video>
 
-        <!-- Section for city name -->
-        <section class="section" id="city-name">
-            <div class="content fade-in active">
-                <h1>{{package.name}}</h1>
-            </div>
-        </section>
+            <section class="section" id="city-name">
+                <div class="overlay"></div>
+                <h1 class="fade-in">{{package.name}}</h1>
+            </section>
 
-        <!-- Section for city description (triggered by scroll) -->
-        <section class="section" id="city-description">
-            <div class="content fade-in">
-                <p>{{package.description}}</p>
-            </div>
-        </section>
-    </div>
-
-    <!-- New sections (after video ends) -->
-    <section class="normal-section">
-        <div class="section3">
-            <div class="section3-content">
-                <h1>Welcome to Section 3</h1>
-                <p>This is an amazing place to showcase something cool.</p>
-            </div>
+            <section class="section" id="city-description">
+                <div class="overlay"></div>
+                <p class="fade-in">{{package.description}}</p>
+            </section>
         </div>
-    </section>
 
-    <section class="normal-section">
-        <div class="section4">
-            <div class="section4-content">
-                <h1>Welcome to Section 4</h1>
-                <p>This is another amazing section to explore.</p>
-            </div>
-        </div>
-    </section>
+        <div>
+            <section class="normal-section border-bottom" style="overflow: hidden;">
+                <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=1');">
+                    <div class="col text-center">
+                        <h1>Welcome to Section 3</h1>
+                        <p>This is an amazing place to showcase something cool.</p>
+                    </div>
+                </div>
+            </section>
 
-    <section class="normal-section">
-        <div class="section5">
-            <div class="section5-content">
-                <h1>Welcome to Section 5</h1>
-                <p>Discover more awesome content in this section.</p>
-            </div>
-        </div>
-    </section>
+            <section class="normal-section border-bottom" style="overflow: hidden;">
+                <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=2');">
+                    <div class="col text-center">
+                        <h1>Welcome to Section 4</h1>
+                        <p>This is an amazing place to showcase something cool.</p>
+                    </div>
+                </div>
+            </section>
 
-    <section class="normal-section">
-        <div class="section6">
-            <div class="section6-content">
-                <h1>Welcome to Section 6</h1>
-                <p>Here you can showcase even more cool things.</p>
+            <div class="video-container2">
+                <video autoplay muted loop id="background-video">
+                    <source src="{{package.video}}" type="video/mp4">
+                </video>
+        
+                <section class="section" id="city-name">
+                    <div class="overlay"></div>
+                    <h1 class="fade-in">{{package.name}}</h1>
+                </section>
             </div>
+
+            <section class="normal-section border-bottom" style="overflow: hidden;">
+                <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=3');">
+                    <div class="col text-center">
+                        <h1>Welcome to Section 5</h1>
+                        <p>This is an amazing place to showcase something cool.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="normal-section border-bottom" style="overflow: hidden;">
+                <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=4);">
+                    <div class="col text-center">
+                        <h1>Welcome to Section 6</h1>
+                        <p>This is an amazing place to showcase something cool.</p>
+                    </div>
+                </div>
+            </section>
         </div>
-    </section>
-</main>
+    </main>
 {% endblock %}
 
 {% block additional_js %}
-<script>
-    // Select the elements we want to animate
-    const fadeInElements = document.querySelectorAll('.fade-in');
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script>
+        const zoomSections = document.querySelectorAll('.zoom');
+        const maxScale = 2; // Maximum scale value
 
-    // Function to trigger the fade-in effect when scrolling
-    function handleScroll() {
-        fadeInElements.forEach(element => {
-            const elementPosition = element.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
 
-            // Check if the element is in the viewport
-            if (elementPosition < windowHeight - 100) {
-                element.classList.add('active');
-            } else {
-                element.classList.remove('active');
-            }
+            zoomSections.forEach((section) => {
+                const sectionOffset = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const isInViewport = scrollPosition + window.innerHeight > sectionOffset && scrollPosition < sectionOffset + sectionHeight;
+
+                if (isInViewport) {
+                    const scaleValue = Math.min(maxScale, 1 + (scrollPosition - sectionOffset + window.innerHeight) / (sectionHeight * 2));
+                    section.style.transform = `scale(${scaleValue})`;
+                } else {
+                    section.style.transform = `scale(1)`;
+                }
+            });
         });
-    }
-
-    // Run on scroll and load
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('load', handleScroll);
-
-    // Zoom effect for multiple sections
-    const sections = document.querySelectorAll('.section3, .section4, .section5, .section6');
-
-    window.addEventListener('scroll', function() {
-        sections.forEach(section => {
-            const sectionPosition = section.getBoundingClientRect().top; // Get the position of the section
-            const windowHeight = window.innerHeight; // Get the window height
-
-            if (sectionPosition < windowHeight && sectionPosition > windowHeight / 2) {
-                const scaleValue = Math.min(1.4, 1 + (windowHeight - sectionPosition) / windowHeight * 0.4);
-                section.style.transform = `scale(${scaleValue})`;
-            } else if (sectionPosition < windowHeight / 2 && sectionPosition > 0) {
-                const scaleValue = Math.max(1, (sectionPosition / windowHeight) * 2);
-                section.style.transform = `scale(${scaleValue})`;
-            } else {
-                section.style.transform = 'scale(1)';
-            }
-        });
-    });
-</script>
+    </script>
 {% endblock %}

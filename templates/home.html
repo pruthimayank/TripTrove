@@ -81,11 +81,9 @@
 
         .ticket-card {
             position: relative;
-            background-color: #fff; /* Adjust the background color as needed */
-            border: 1px solid #ddd; /* Light border for the ticket edge */
-            /* border-radius: 12px; Rounded corners */
+            background-color: #fff;
+            border: 0;
             padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for effect */
             border: none;
             text-align: center;
             overflow: hidden;
@@ -97,40 +95,25 @@
         .ticket-card .cutout-right {
             content: "";
             position: absolute;
-            width: 25px; /* Size of the cutout */
+            width: 35px; /* Size of the cutout */
             height: 60px; /* Size of the cutout */
             background: #141414; /* Color for the cutouts */
         }
 
         .ticket-card::before,
         .ticket-card .cutout-left {
+            top: 35%;
             border-radius: 0 30px 30px 0;
-            left: -15px; /* Position for left side cutouts */
+            left: -20px; /* Position for left side cutouts */
         }
 
         .ticket-card::after,
         .ticket-card .cutout-right {
+            top: 35%;
             border-radius: 30px 0 0 30px;
-            right: -15px; /* Position for right side cutouts */
+            right: -20px; /* Position for right side cutouts */
         }
 
-        .ticket-card::before {
-            top: 15%; /* Adjust spacing from top for the first left cutout */
-        }
-
-        .ticket-card .cutout-left {
-            top: 75%; /* Adjust spacing from top for the second left cutout */
-            transform: translateY(-50%);
-        }
-
-        .ticket-card::after {
-            top: 15%; /* Adjust spacing from top for the first right cutout */
-        }
-
-        .ticket-card .cutout-right {
-            top: 75%; /* Adjust spacing from top for the second right cutout */
-            transform: translateY(-50%);
-        }
 
 
         @keyframes fadeInUp {
@@ -231,10 +214,6 @@
                             <div class="card-content h-100">
                                 <br>
                                 <h3>Jaipur</h3>
-                                <div class="cutout-left"></div>
-                                <div class="cutout-left"></div>
-                                <div class="cutout-right"></div>
-                                <div class="cutout-right"></div>
                             </div>
                         </div>
                     </div>
@@ -244,10 +223,6 @@
                             <div class="card-content h-100">
                                 <br>
                                 <h3>Udaipur</h3>
-                                <div class="cutout-left"></div>
-                                <div class="cutout-left"></div>
-                                <div class="cutout-right"></div>
-                                <div class="cutout-right"></div>
                             </div>
                         </div>
                     </div>
@@ -256,11 +231,7 @@
                             <div class="card-image m-0 p-0" style="border-bottom: 1px dashed blue; height: 50vh; background-image: url('https://res.cloudinary.com/dn5oapayl/image/upload/v1688474343/zlr3wmsnvvgutak7pvxt.jpg'); background-size: cover;"></div>
                             <div class="card-content h-100">
                                 <br>
-                                <h3>Jibhi</h3>
-                                <div class="cutout-left"></div>
-                                <div class="cutout-left"></div>
-                                <div class="cutout-right"></div>
-                                <div class="cutout-right"></div>
+                                <h3>Jodhpur</h3>
                             </div>
                         </div>
                     </div>
@@ -269,11 +240,7 @@
                             <div class="card-image m-0 p-0" style="border-bottom: 1px dashed blue; height: 50vh; background-image: url('https://res.cloudinary.com/dn5oapayl/image/upload/v1688474343/zlr3wmsnvvgutak7pvxt.jpg'); background-size: cover;"></div>
                             <div class="card-content h-100">
                                 <br>
-                                <h3>Kasol</h3>
-                                <div class="cutout-left"></div>
-                                <div class="cutout-left"></div>
-                                <div class="cutout-right"></div>
-                                <div class="cutout-right"></div>
+                                <h3>Jaisalmer</h3>
                             </div>
                         </div>
                     </div>
