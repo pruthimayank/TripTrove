@@ -123,10 +123,16 @@ def bookings(request):
 
     if login == 'loggedin' and user:
         booking_success = request.GET.get('success') == 'true'
+
+        agent_instance = agent.objects.get(id=user['id'])
+
+        booking_history = agent_instance.bookinghistory if agent_instance.bookinghistory else []
+
         return render(request, 'bookings.html', {
             'user': user,
             'login': login,
-            'booking_success': booking_success
+            'booking_success': booking_success,
+            'booking_history': booking_history  
         })
     else:
         return redirect('login')
@@ -159,33 +165,44 @@ def logout(request):
 def handle_booking(request):
     if request.method == 'POST':
         try:
-            print(f"Request body: {request.body}")  # Print the entire request body for debugging
-            data = json.loads(request.body)  # Attempt to parse the JSON payload
+            data = json.loads(request.body)
 
-            # Extract fields from the parsed JSON
             first_name = data.get('first_name')
             last_name = data.get('last_name')
             slot_start = data.get('slot_start')
             slot_end = data.get('slot_end')
             total_amount = data.get('total_amount')
 
-            # Debug: Ensure data is correctly parsed
-            print(f"First Name: {first_name}, Last Name: {last_name}, Slot Start: {slot_start}, Slot End: {slot_end}, Total Amount: {total_amount}")
-
             if not (first_name and last_name and slot_start and slot_end and total_amount):
                 return JsonResponse({'status': 'error', 'message': 'Missing required fields'}, status=400)
 
-            # Handle booking logic...
-            # For example, save to session or database
+            user_data = request.session.get('user_data')
+            if not user_data:
+                return JsonResponse({'status': 'error', 'message': 'User not logged in'}, status=400)
+
+            agent_instance = agent.objects.get(id=user_data['id'])
+
+            booking_history = agent_instance.bookinghistory if agent_instance.bookinghistory else []
+
+            new_booking = {
+                'first_name': first_name,
+                'last_name': last_name,
+                'slot_start': slot_start,
+                'slot_end': slot_end,
+                'total_amount': total_amount
+            }
+
+            booking_history.append(new_booking)
+
+            agent_instance.bookinghistory = booking_history
+            agent_instance.save()
 
             return JsonResponse({'status': 'success', 'message': 'Booking confirmed'})
 
         except json.JSONDecodeError as e:
-            print(f"JSON decode error: {e}")  # Print the error
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON format'}, status=400)
 
         except Exception as e:
-            print(f"Error: {e}")  # Catch all other errors and print them
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
