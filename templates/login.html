@@ -23,15 +23,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 80%;
-            height: 70%;
+            width: 90%;
+            height: 90%;
             max-width: 1200px;
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+            background-color: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            background: url('https://c4.wallpaperflare.com/wallpaper/879/986/428/purple-landscape-reflection-dusk-evening-wallpaper-preview.jpg') no-repeat center center;
-            background-size: cover; /* Ensures image fits the container */
         }
 
         .welcome-section {
@@ -181,6 +179,7 @@
                     </div>
                 </div>
                 <button type="submit">Sign In</button>
+                <p class="text-center my-2"><a href="/">Guest login?</a></p>
             </form>
             <div class="form-footer">
                 <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>

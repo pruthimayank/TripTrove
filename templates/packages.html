@@ -1,110 +1,9 @@
 <head>
     <title>Packages</title>
-    <!-- Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Section and parallax background styling */
-        .section {
-            height: 100vh;
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            display: flex;
-            align-items: center;
-            position: relative;
-            color: white;
-            padding: 20px;
-        }
-
-        /* Gradient overlay for the background */
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 100%);
-            z-index: 1;
-        }
-
-        .container {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-wrap: wrap; /* Ensures that text and form wrap when needed */
-        }
-
-        /* Form container styling */
-        .form-section {
-            background: rgba(68, 67, 67, 0.9);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-            margin-left: auto; /* Align to right */
-        }
-
-        /* Text styling */
-        .text-container {
-            color: white;
-            text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
-            max-width: 600px;
-            margin-right: auto; /* Align to left */
-        }
-
-        .text-container h1 {
-            font-size: 4vw;
-        }
-
-        .text-container h3 {
-            font-size: 1.5vw;
-        }
-
-        /* Guest counter input styling */
-        .guest-counter .btn {
-            width: 40px;
-            height: 40px;
-        }
-
-        .guest-counter input {
-            width: 60px;
-            text-align: center;
-            font-size: 1.2rem;
-        }
-
-        /* Total amount styling */
-        .total-amount {
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        /* Checkout button */
-        .btn-checkout {
-            width: 100%;
-            background-color: #007bff;
-            color: #fff;
-            font-size: 1.2rem;
-            height: 50px;
-            border: none;
-            border-radius: 5px;
-            margin-top: 20px;
-            cursor: not-allowed; /* Default state with disabled cursor */
-        }
-
-        /* Enabled button styling */
-        .btn-checkout.enabled {
-            cursor: pointer; /* Pointer cursor when button is enabled */
-        }
-
-        /* Disabled button styling */
-        .btn-checkout:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-        }
+        /* input::placeholder{
+            color: white !important;
+        } */
 
         /* Modal custom styling */
         .modal-content {
@@ -133,50 +32,6 @@
         .modal-body input::placeholder {
             color: rgba(0, 0, 0, 0.5);
         }
-
-        /* Submit button in modal */
-        .btn-confirm {
-            background-color: #007bff;
-            color: white;
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.2rem;
-        }
-
-        /* Disabled button styling */
-        .btn-confirm:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-        }
-
-        /* Responsive for mobile screens */
-        @media (max-width: 768px) {
-            .text-container {
-                text-align: center; /* Center the text on smaller screens */
-                margin-right: 0; /* Reset margin */
-                margin-bottom: 20px; /* Add space between text and form */
-            }
-
-            .text-container h1 {
-                font-size: 6vw;
-            }
-
-            .text-container h3 {
-                font-size: 4vw;
-            }
-
-            .form-section {
-                margin: 0 auto; /* Center the form on smaller screens */
-                width: 90%; /* Adjust form width for smaller screens */
-            }
-
-            .section {
-                flex-direction: column;
-                justify-content: center;
-            }
-        }
     </style>
 </head>
 
@@ -184,179 +39,72 @@
 
 {% block content %}
 <div>
-    <!-- Section 1 -->
-    <section class="section" style="background-image: url('https://www.tourism.rajasthan.gov.in/content/dam/rajasthan-tourism/english/city/explore/BadiLakeUdaipur.jpg');">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div class="text-container">
-                <h1>Let India's wonders unfold before your eyes</h1>
-                <h3>Trust your vacation to our travel experts & experience an unforgettable journey</h3>
-            </div>
-            <div class="form-section">
-                <h4>Book Your Slot</h4>
-                <form id="booking-form">
-                    <div class="mb-3">
-                        <label for="slot-selection" class="form-label">Pick Your Slot</label>
-                        <select id="slot-selection" name="slot-selection" class="form-select" required>
-                            <option value="slot1">Slot 1: 9:00 AM - 12:00 PM</option>
-                            <option value="slot2">Slot 2: 12:00 PM - 3:00 PM</option>
-                            <option value="slot3">Slot 3: 3:00 PM - 6:00 PM</option>
-                        </select>
+    {% for i in packages %}
+        <div class="row mx-0 border-bottom" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url('{{i.image}}'); background-repeat: no-repeat; background-size: cover;">
+            <div class="col-md-7 mt-2">
+                <section class="px-2 rounded-2">
+                    <div class="d-flex flex-column justify-content-center p-2 h-100">
+                        <small>{{i.description}}</small>
+                        <h1>{{i.name}}</h1>
+                        <br>
+                        <p>Check the booking history of your bookings Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid, odit maiores officiis nisi quis perspiciatis atque veritatis magni eos doloribus id voluptate nobis vel ea, vero necessitatibus fugiat soluta quae.</p>
+                        <br>
+                        {% if login == "loggedin" %}
+                            <p>Get your booking confirm for {{user.firstname}} {{user.lastname}}</p>
+                        {% endif %}
+                        <a href="/bookings" class="text-white">Check Booking Status</a>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="guest-count" class="form-label">Number of Guests</label>
-                        <div class="input-group guest-counter">
-                            <button type="button" class="btn btn-outline-secondary" onclick="updateGuestCount(-1)">-</button>
-                            <input type="number" id="guest-count" name="guest-count" class="form-control text-center" value="1" min="1" readonly>
-                            <button type="button" class="btn btn-outline-secondary" onclick="updateGuestCount(1)">+</button>
+                </section>
+            </div>
+            <div class="col-md-5 mt-2">
+                <br>
+                <br>
+                <br>
+                <div class="card border-0 p-3" style="background-color: transparent; color: white;">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between">
+                        <div>
+                            <h5>Details:</h5>
+                            <!-- <h4>Status</h4> -->
+                        </div>
+                        <div>
+                            <a>check status</a>
+                            <!-- <img width="60" height="60" src="https://img.icons8.com/dotty/ffffff/80/checked.png" alt="checked"/> -->
                         </div>
                     </div>
-
-                    <div class="total-amount">
-                        Total: ₹<span id="total-amount">5000</span>
+                    <!-- <p>We will get back to you soon!</p> -->
+                    <div class="mt-2 border border-light rounded-2 p-3" style="background-color: #00000055;">
+                        <div class="d-flex flex-wrap align-items-center justify-content-between">
+                            <h4 class="mt-2">Select Slot:</h4>
+                            <div>
+                                <select class="form-select" required>
+                                    <option value="slot1">Slot 1: 9:00 AM - 12:00 PM</option>
+                                    <option value="slot2">Slot 2: 12:00 PM - 3:00 PM</option>
+                                    <option value="slot3">Slot 3: 3:00 PM - 6:00 PM</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-flex flex-wrap align-items-center justify-content-between">
+                            <h4 class="mt-2">Guests:</h4>
+                            <div>
+                                <input type="number" name="" class="form-control border-0" placeholder="Enter No. Of Guests">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-flex flex-wrap align-items-center justify-content-between">
+                            <h4>Price:</h4>
+                            <h4>₹{{i.price}}</h4>
+                        </div>
                     </div>
-
-                    <div class="form-check mt-3">
-                        <input class="form-check-input" type="checkbox" id="termsCheck" onchange="toggleCheckoutButton()">
-                        <label class="form-check-label" for="termsCheck">I accept the <a href="#">terms and conditions</a></label>
+                    <div class="mt-2 border border-light rounded-2 p-3" style="background-color: #00000055;">
+                        <button type="button" class="btn btn-outline-light w-100 my-2" data-bs-toggle="modal" data-bs-target="#checkoutModal">Checkout</button>
+                        <button type="button" class="btn btn-outline-light w-100 my-2">View Package</button>
                     </div>
-
-                    <button type="button" class="btn btn-checkout" id="checkoutButton" data-bs-toggle="modal" data-bs-target="#checkoutModal" disabled>Checkout</button>
-                </form>
+                </div>
+            <br>
             </div>
         </div>
-    </section>
-    <section id="section2" class="section" style="background-image: url('https://jaipurtourism.co.in/images/places-to-visit/header/jal-mahal-jaipur-entry-fee-timings-holidays-reviews-header.jpg');">
-        <div class="container d-flex justify-content-between align-items-center">
-         <div class="text-container">
-         <h1>Explore the Majestic Jaipur</h1>
-         <h3>Discover the Pink City and immerse yourself in history</h3>
-         </div>
-         <!-- Booking Form -->
-         <div class="form-section">
-             <h4>Book Your Slot</h4>
-             <form id="booking-form">
-                 <div class="mb-3">
-                     <label for="slot-selection" class="form-label">Pick Your Slot</label>
-                     <select id="slot-selection" name="slot-selection" class="form-select" required>
-                         <option value="slot1">Slot 1: 9:00 AM - 12:00 PM</option>
-                         <option value="slot2">Slot 2: 12:00 PM - 3:00 PM</option>
-                         <option value="slot3">Slot 3: 3:00 PM - 6:00 PM</option>
-                     </select>
-                 </div>
- 
-                 <div class="mb-3">
-                     <label for="guest-count" class="form-label">Number of Guests</label>
-                     <div class="input-group guest-counter">
-                         <button type="button" class="btn btn-outline-secondary" onclick="updateGuestCount(-1)">-</button>
-                         <input type="number" id="guest-count" name="guest-count" class="form-control text-center" value="1" min="1" readonly>
-                         <button type="button" class="btn btn-outline-secondary" onclick="updateGuestCount(1)">+</button>
-                     </div>
-                 </div>
- 
-                 <div class="total-amount">
-                     Total: ₹<span id="total-amount">5000</span>
-                 </div>
- 
-                 <div class="form-check mt-3">
-                     <input class="form-check-input" type="checkbox" id="termsCheck" onchange="toggleCheckoutButton()">
-                     <label class="form-check-label" for="termsCheck">I accept the <a href="#">terms and conditions</a></label>
-                 </div>
- 
-                 <button type="button" class="btn btn-checkout" id="checkoutButton" disabled>Checkout</button>
-             </form>
-         </div>
-        </div>
-     </section>
- 
-     <!-- Section 3 -->
-     <section id="section3" class="section" style="background-image: url('https://mycrazyworldfun.com/wp-content/uploads/2021/07/wp-16264718112324506747915156403400-scaled.jpg');">
-         <div class="container d-flex justify-content-between align-items-center"> 
-         <div class="text-container">
-         <h1>Experience Udaipur's Tranquility</h1>
-         <h3>Let the Lake City soothe your soul</h3>
-         </div>
-         <!-- Booking Form -->
-         <div class="form-section">
-             <h4>Book Your Slot</h4>
-             <form id="booking-form">
-                 <div class="mb-3">
-                     <label for="slot-selection" class="form-label">Pick Your Slot</label>
-                     <select id="slot-selection" name="slot-selection" class="form-select" required>
-                         <option value="slot1">Slot 1: 9:00 AM - 12:00 PM</option>
-                         <option value="slot2">Slot 2: 12:00 PM - 3:00 PM</option>
-                         <option value="slot3">Slot 3: 3:00 PM - 6:00 PM</option>
-                     </select>
-                 </div>
- 
-                 <div class="mb-3">
-                     <label for="guest-count" class="form-label">Number of Guests</label>
-                     <div class="input-group guest-counter">
-                         <button type="button" class="btn btn-outline-secondary" onclick="updateGuestCount(-1)">-</button>
-                         <input type="number" id="guest-count" name="guest-count" class="form-control text-center" value="1" min="1" readonly>
-                         <button type="button" class="btn btn-outline-secondary" onclick="updateGuestCount(1)">+</button>
-                     </div>
-                 </div>
- 
-                 <div class="total-amount">
-                     Total: ₹<span id="total-amount">5000</span>
-                 </div>
- 
-                 <div class="form-check mt-3">
-                     <input class="form-check-input" type="checkbox" id="termsCheck" onchange="toggleCheckoutButton()">
-                     <label class="form-check-label" for="termsCheck">I accept the <a href="#">terms and conditions</a></label>
-                 </div>
- 
-                 <button type="button" class="btn btn-checkout" id="checkoutButton" disabled>Checkout</button>
-             </form>
-         </div>
-         </div>
-     </section>
- 
-     <!-- Section 4 -->
-     <section id="section4" class="section" style="background-image: url('https://vl-prod-static.b-cdn.net/system/images/000/746/268/4aa634e7788f54c28a743380aca22013/x1200gt/2091.jpg');">
-     <div class="container d-flex justify-content-between align-items-center">
-         <div class="text-container">
-         <h1>The Golden Sands of Jaisalmer</h1>
-         <h3>Uncover the beauty of the Thar Desert</h3>
-         </div>
-         <!-- Booking Form -->
-         <div class="form-section">
-             <h4>Book Your Slot</h4>
-             <form id="booking-form">
-                 <div class="mb-3">
-                     <label for="slot-selection" class="form-label">Pick Your Slot</label>
-                     <select id="slot-selection" name="slot-selection" class="form-select" required>
-                         <option value="slot1">Slot 1: 9:00 AM - 12:00 PM</option>
-                         <option value="slot2">Slot 2: 12:00 PM - 3:00 PM</option>
-                         <option value="slot3">Slot 3: 3:00 PM - 6:00 PM</option>
-                     </select>
-                 </div>
- 
-                 <div class="mb-3">
-                     <label for="guest-count" class="form-label">Number of Guests</label>
-                     <div class="input-group guest-counter">
-                         <button type="button" class="btn btn-outline-secondary" onclick="updateGuestCount(-1)">-</button>
-                         <input type="number" id="guest-count" name="guest-count" class="form-control text-center" value="1" min="1" readonly>
-                         <button type="button" class="btn btn-outline-secondary" onclick="updateGuestCount(1)">+</button>
-                     </div>
-                 </div>
- 
-                 <div class="total-amount">
-                     Total: ₹<span id="total-amount">5000</span>
-                 </div>
- 
-                 <div class="form-check mt-3">
-                     <input class="form-check-input" type="checkbox" id="termsCheck" onchange="toggleCheckoutButton()">
-                     <label class="form-check-label" for="termsCheck">I accept the <a href="#">terms and conditions</a></label>
-                 </div>
- 
-                 <button type="button" class="btn btn-checkout" id="checkoutButton" disabled>Checkout</button>
-             </form>
-         </div>
-     </div>
-     </section>
-
+    {% endfor %}
     <!-- Repeat other sections here (similar to Section 1) -->
 
     <!-- Modal Structure -->
@@ -416,17 +164,16 @@
 
 {% block additional_js %}
 <script>
-    const pricePerGuest = 5000;
 
-    function updateGuestCount(change) {
-        const guestCountInput = document.getElementById('guest-count');
+    function updateGuestCount(change, pricePerGuest) {
+        const guestCountInput = document.querySelector('.guest-count');
         let currentCount = parseInt(guestCountInput.value);
         currentCount += change;
         if (currentCount < 1) {
             currentCount = 1;
         }
         guestCountInput.value = currentCount;
-        document.getElementById('total-amount').textContent = pricePerGuest * currentCount;
+        document.querySelector('.total-amount').textContent = pricePerGuest * currentCount;
     }
 
     function toggleCheckoutButton() {
@@ -449,61 +196,61 @@
     });
 
     // Function to get CSRF token from cookies
-function getCSRFToken() {
-    let csrfToken = null;
-    const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith('csrftoken=')) {
-            csrfToken = cookie.substring('csrftoken='.length);
-            break;
+    function getCSRFToken() {
+        let csrfToken = null;
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith('csrftoken=')) {
+                csrfToken = cookie.substring('csrftoken='.length);
+                break;
+            }
         }
+        return csrfToken;
     }
-    return csrfToken;
-}
 
-document.getElementById('confirm-booking-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    console.log("Booking form submitted");
+    document.getElementById('confirm-booking-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        console.log("Booking form submitted");
 
-    const bookingData = {
-        first_name: document.getElementById('first-name').value,
-        last_name: document.getElementById('last-name').value,
-        slot_start: document.getElementById('modal-slot-start').value,
-        slot_end: document.getElementById('modal-slot-end').value,
-        total_amount: document.getElementById('modal-total-amount').value,
-    };
+        const bookingData = {
+            first_name: document.getElementById('first-name').value,
+            last_name: document.getElementById('last-name').value,
+            slot_start: document.getElementById('modal-slot-start').value,
+            slot_end: document.getElementById('modal-slot-end').value,
+            total_amount: document.getElementById('modal-total-amount').value,
+        };
 
-    console.log("Booking data:", bookingData);
+        console.log("Booking data:", bookingData);
 
-    // Send JSON data to the server
-    fetch('/booking/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCSRFToken(),  // Fetch CSRF token here
-        },
-        body: JSON.stringify(bookingData),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("Server response:", data);
-        if (data.status === 'success') {
-            // Redirect to the bookings page with a success flag
-            window.location.href = '/bookings/?success=true';
-        } else {
-            console.error('Booking failed:', data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
+        // Send JSON data to the server
+        fetch('/booking/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken(),  // Fetch CSRF token here
+            },
+            body: JSON.stringify(bookingData),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Server response:", data);
+            if (data.status === 'success') {
+                // Redirect to the bookings page with a success flag
+                window.location.href = '/bookings/?success=true';
+            } else {
+                console.error('Booking failed:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     });
-});
 
 
 
