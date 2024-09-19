@@ -86,23 +86,24 @@
         </div>
 
         <div>
-            <section class="normal-section border-bottom" style="overflow: hidden;">
-                <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=1');">
-                    <div class="col text-center">
-                        <h1>Welcome to Section 3</h1>
-                        <p>This is an amazing place to showcase something cool.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="normal-section border-bottom" style="overflow: hidden;">
-                <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=2');">
-                    <div class="col text-center">
-                        <h1>Welcome to Section 4</h1>
-                        <p>This is an amazing place to showcase something cool.</p>
-                    </div>
-                </div>
-            </section>
+            {% for itinerary in package.itineraries %}
+    <section class="normal-section border-bottom" style="overflow: hidden;">
+        <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('{{ itinerary.image }}');">
+            <div class="col text-center">
+                <h1>{{ itinerary.title }}</h1>
+                <p>{{ itinerary.description }}</p>
+            </div>
+        </div>
+    </section>
+{% empty %}
+    <section class="normal-section border-bottom" style="overflow: hidden;">
+        <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400');">
+            <div class="col text-center">
+                <h1>No itineraries available</h1>
+            </div>
+        </div>
+    </section>
+{% endfor %}
 
             <div class="video-container2">
                 <video autoplay muted loop id="background-video">
@@ -115,23 +116,7 @@
                 </section>
             </div>
 
-            <section class="normal-section border-bottom" style="overflow: hidden;">
-                <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=3');">
-                    <div class="col text-center">
-                        <h1>Welcome to Section 5</h1>
-                        <p>This is an amazing place to showcase something cool.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="normal-section border-bottom" style="overflow: hidden;">
-                <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400?random=4);">
-                    <div class="col text-center">
-                        <h1>Welcome to Section 6</h1>
-                        <p>This is an amazing place to showcase something cool.</p>
-                    </div>
-                </div>
-            </section>
+            
         </div>
     </main>
 {% endblock %}
