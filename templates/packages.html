@@ -1,10 +1,6 @@
 <head>
     <title>Packages</title>
     <style>
-        /* input::placeholder{
-            color: white !important;
-        } */
-
         /* Modal custom styling */
         .modal-content {
             background: rgba(68, 67, 67, 0.9);
@@ -32,6 +28,34 @@
         .modal-body input::placeholder {
             color: rgba(0, 0, 0, 0.5);
         }
+
+        /* Ensuring each section takes up full viewport height */
+        .package-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .package-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); 
+            z-index: 1;
+        }
+
+        .package-section > * {
+            position: relative;
+            z-index: 2;
+        }
     </style>
 </head>
 
@@ -40,7 +64,7 @@
 {% block content %}
 <div>
     {% for i in packages %}
-        <div class="row mx-0 border-bottom" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url('{{i.image}}'); background-repeat: no-repeat; background-size: cover;">
+        <div class="row mx-0 border-bottom package-section" style="background-image: url('{{i.image}}');">
             <div class="col-md-7 mt-2">
                 <section class="px-2 rounded-2">
                     <div class="d-flex flex-column justify-content-center p-2 h-100">
