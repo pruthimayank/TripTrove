@@ -111,7 +111,7 @@
                         <div class="d-flex flex-wrap align-items-center justify-content-between">
                             <h4 class="mt-2">Guests:</h4>
                             <div>
-                                <input type="number" name="" class="form-control border-0" placeholder="Enter No. Of Guests">
+                                <input type="number" name="" class="form-control border-0 guest-count" placeholder="Enter No. Of Guests">
                             </div>
                         </div>
                         <br>
@@ -121,7 +121,7 @@
                         </div>
                     </div>
                     <div class="mt-2 border border-light rounded-2 p-3" style="background-color: #00000055;">
-                        <button type="button" class="btn btn-outline-light w-100 my-2" data-bs-toggle="modal" data-bs-target="#checkoutModal">Checkout</button>
+                        <button type="button" class="btn btn-outline-light w-100 my-2" id="checkoutButton" data-bs-toggle="modal" data-bs-target="#checkoutModal">Checkout</button>
                         <button type="button" class="btn btn-outline-light w-100 my-2">View Package</button>
                     </div>
                 </div>
@@ -188,7 +188,6 @@
 
 {% block additional_js %}
 <script>
-
     function updateGuestCount(change, pricePerGuest) {
         const guestCountInput = document.querySelector('.guest-count');
         let currentCount = parseInt(guestCountInput.value);
@@ -212,26 +211,15 @@
             checkoutButton.classList.remove('enabled');
         }
     }
+    function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
 
     // Update Modal Form with Slot and Amount from Main Form
     document.getElementById('checkoutButton').addEventListener('click', function() {
         const totalAmount = document.getElementById('total-amount').textContent;
         document.getElementById('modal-total-amount').value = totalAmount;
     });
-
-    // Function to get CSRF token from cookies
-    function getCSRFToken() {
-        let csrfToken = null;
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.startsWith('csrftoken=')) {
-                csrfToken = cookie.substring('csrftoken='.length);
-                break;
-            }
-        }
-        return csrfToken;
-    }
 
     document.getElementById('confirm-booking-form').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -247,25 +235,23 @@
 
         console.log("Booking data:", bookingData);
 
-        // Send JSON data to the server
         fetch('/booking/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken(),  // Fetch CSRF token here
+                'X-CSRFToken': getCSRFToken(),
             },
             body: JSON.stringify(bookingData),
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok. Status: ${response.status}`);
             }
             return response.json();
         })
         .then(data => {
             console.log("Server response:", data);
             if (data.status === 'success') {
-                // Redirect to the bookings page with a success flag
                 window.location.href = '/bookings/?success=true';
             } else {
                 console.error('Booking failed:', data.message);
@@ -275,8 +261,5 @@
             console.error('Error:', error);
         });
     });
-
-
-
 </script>
 {% endblock %}
