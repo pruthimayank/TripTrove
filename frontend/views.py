@@ -164,6 +164,41 @@ def about(request):
         }
         return render(request, 'about.html', data)
     
+def policies(request):
+    user = request.session.get('user_data')
+    login = request.session.get('login')
+    
+    if login == 'loggedin':
+        data={
+            'user': request.session.get('user_data'),
+            'login': 'loggedin'
+        }
+        return render(request, 'policies.html', data)
+    else:
+        data = {
+            'user': request.session.get('user_data'),
+            'login': 'notloggedin'
+        }
+        return render(request, 'policies.html', data)
+    
+def terms(request):
+    user = request.session.get('user_data')
+    login = request.session.get('login')
+    
+    if login == 'loggedin':
+        data={
+            'user': request.session.get('user_data'),
+            'login': 'loggedin'
+        }
+        return render(request, 'terms.html', data)
+    else:
+        data = {
+            'user': request.session.get('user_data'),
+            'login': 'notloggedin'
+        }
+        return render(request, 'terms.html', data)
+
+    
 def logout(request):
     request.session.flush()
     return redirect('login')
