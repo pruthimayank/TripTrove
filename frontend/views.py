@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Packages, agent  
+from .models import Packages, agent  # Assuming 'agent' is the correct model for agents
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+from datetime import datetime
 
 # Login view
 def login(request):
@@ -29,8 +30,6 @@ def login(request):
     
     return render(request, 'login.html')
 
-
-
 # Signup view
 def signup(request):
     if request.method == 'POST':
@@ -45,12 +44,12 @@ def signup(request):
         if agent.objects.filter(phone=phone).exists():
             return render(request, 'signup.html', {'error': 'Phone number already taken'})
 
-        new_agent = agent(username=username, email=email, phone=phone ,password=password)
+        # Create new agent
+        new_agent = agent(username=username, email=email, phone=phone, password=password)
         new_agent.save()
         return redirect('login') 
-    else:
-        return render(request, 'signup.html')
-
+    
+    return render(request, 'signup.html')
 
 # Home view
 def home(request):
@@ -101,6 +100,7 @@ def package(request, package):
         else:
             return render(request, '404.html', {'error': 'Package not found'})
 
+# Packages view
 def packages(request):
     user = request.session.get('user_data')
     login = request.session.get('login')
@@ -121,28 +121,30 @@ def packages(request):
             'packages': packages_list
         }
         return render(request, 'packages.html', data)
-    
+
 def bookings(request):
     user = request.session.get('user_data')
     login = request.session.get('login')
 
     if login == 'loggedin' and user:
-        booking_success = request.GET.get('success') == 'true'
-
         agent_instance = agent.objects.get(id=user['id'])
 
         booking_history = agent_instance.bookinghistory if agent_instance.bookinghistory else []
 
+        current_date = datetime.now().date()  
+        for booking in booking_history:
+            booking['slot_start'] = datetime.strptime(booking['slot_start'], '%Y-%m-%d').date()
+            booking['slot_end'] = datetime.strptime(booking['slot_end'], '%Y-%m-%d').date()
+
         return render(request, 'bookings.html', {
             'user': user,
             'login': login,
-            'booking_success': booking_success,
+            'current_date': current_date, 
             'booking_history': booking_history  
         })
     else:
         return redirect('login')
-
-
+# About view
 def about(request):
     user = request.session.get('user_data')
     login = request.session.get('login')
@@ -159,13 +161,13 @@ def about(request):
             'login': 'notloggedin'
         }
         return render(request, 'about.html', data)
-    
+
+# Logout view
 def logout(request):
     request.session.flush()
     return redirect('login')
 
-
-#rest
+# REST for handling booking via API
 @csrf_exempt
 def handle_booking(request):
     if request.method == 'POST':
@@ -178,33 +180,46 @@ def handle_booking(request):
             slot_end = data.get('slot_end')
             total_amount = data.get('total_amount')
 
+            # Ensure all fields are present
             if not (first_name and last_name and slot_start and slot_end and total_amount):
                 return JsonResponse({'status': 'error', 'message': 'Missing required fields'}, status=400)
 
+            # Convert slot_start and slot_end to date objects
+            try:
+                slot_start_date = datetime.strptime(slot_start, '%Y-%m-%d').date()
+                slot_end_date = datetime.strptime(slot_end, '%Y-%m-%d').date()
+            except ValueError:
+                return JsonResponse({'status': 'error', 'message': 'Invalid date format'}, status=400)
+
+            # Ensure the user is logged in
             user_data = request.session.get('user_data')
             if not user_data:
                 return JsonResponse({'status': 'error', 'message': 'User not logged in'}, status=400)
 
+            # Retrieve the agent instance
             agent_instance = agent.objects.get(id=user_data['id'])
 
+            # Get the existing booking history (if available)
             booking_history = agent_instance.bookinghistory if agent_instance.bookinghistory else []
 
+            # Add the new booking
             new_booking = {
                 'first_name': first_name,
                 'last_name': last_name,
-                'slot_start': slot_start,
-                'slot_end': slot_end,
+                'slot_start': slot_start_date.isoformat(),  # Store as ISO formatted string
+                'slot_end': slot_end_date.isoformat(),
                 'total_amount': total_amount
             }
 
             booking_history.append(new_booking)
 
+            # Save updated booking history
             agent_instance.bookinghistory = booking_history
             agent_instance.save()
 
             return JsonResponse({'status': 'success', 'message': 'Booking confirmed'})
 
-        except json.JSONDecodeError as e:
+        except json.JSONDecodeError:
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON format'}, status=400)
 
         except Exception as e:
