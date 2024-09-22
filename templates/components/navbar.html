@@ -74,7 +74,7 @@
         transform: translateY(-20px);
     }
 </style>
-<nav class="navbar navbar-lightt w-100" style="background-color: #00000041; position: fixed; top: 0; z-index: 1000; height: 60px;">
+<nav class="navbar navbar-lightt w-100" style="background-color: #00000041; position: fixed; top: 0; z-index: 1000; height: 70px;">
     <div class="container-fluid">
         <div class="dropdown">
             <span class="navbar-brand dropdown" id="menuDropdown" role="button" aria-expanded="false" style="background-image: none;">
@@ -86,7 +86,7 @@
             <ul id="dropdownMenu" class="dropdown-menu mt-4 ms-2 p-0 hide" aria-labelledby="menuDropdown">
                 <li><a class="dropdown-item px-4 py-2" href="/">Home Page</a></li>
                 {% if login == 'loggedin' %}
-                    <li><a class="dropdown-item px-4 py-2" href="/bookings">Booking History</a></li>
+                    <li><a class="dropdown-item px-4 py-2" href="/bookings">My Bookings</a></li>
                 {% endif %}
                 <li><a class="dropdown-item px-4 py-2" href="/packages">View Packages</a></li>
                 <li><a class="dropdown-item px-4 py-2" href="/about">About Us</a></li>
@@ -97,7 +97,7 @@
         </a>
         <div>
             {% if login == 'loggedin' %}
-                <a class="nav-link" href="/logout">Logout? @{{user.username}}</a>
+                <a class="nav-link" href="/logout">Logout?</a>
             {% else %}
                 <a class="nav-link" href="/login">
                     Login

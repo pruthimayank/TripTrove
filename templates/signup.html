@@ -13,20 +13,21 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3') no-repeat center center fixed;
-            background-size: cover;
         }
 
-        .container {
+        .containerr {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 80%;
-            max-width: 1200px;
+            height: 90%;
+            width: 90%;
+            /* max-width: 90%; */
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
             padding: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url('https://res.cloudinary.com/chatgixbot/image/upload/v1725441469/gn5jzqnt14shpk8tckb4.jpg');
+            background-size: cover;
         }
 
         .welcome-section {
@@ -60,7 +61,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            backdrop-filter: blur(10px); 
+            background-color: white;
+            /* backdrop-filter: blur(10px);  */
             border-radius: 15px;
         }
 
@@ -159,12 +161,12 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="containerr">
         <div class="welcome-section">
             <div class="icon">
                 <i class="bi bi-person-circle"></i> 
             </div>
-            <h1>Let’s Make it Happen Together!</h1>
+            <h1>Let’s Make it <br> Happen Together!</h1>
             <p>Join us and be a part of something special.</p>
         </div>
 

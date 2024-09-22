@@ -14,11 +14,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: url('https://c4.wallpaperflare.com/wallpaper/879/986/428/purple-landscape-reflection-dusk-evening-wallpaper-preview.jpg') no-repeat center center fixed;
-            background-size: cover;
         }
 
-        .container {
+        .containerr {
             position: absolute;
             display: flex;
             justify-content: space-between;
@@ -29,7 +27,9 @@
             background-color: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url('https://res.cloudinary.com/chatgixbot/image/upload/v1725441469/gn5jzqnt14shpk8tckb4.jpg');
+            background-size: cover;
         }
 
         .welcome-section {
@@ -53,7 +53,9 @@
         .form-section {
             flex: 1;
             padding: 40px;
-            backdrop-filter: blur(10px); /* Blur only for the form section */
+            /* background-color: white; */
+            /* backdrop-filter: blur(10px);  */
+            border-radius: 15px; /* Blur only for the form section */
             color: #fff;
             display: flex;
             flex-direction: column;
@@ -145,7 +147,7 @@
 </head>
 <body>
     <!-- Foreground Content (Container) -->
-    <div class="container">
+    <div class="containerr">
         <div class="welcome-section">
             <h1>Welcome!</h1>
             <p>To Our New Website.</p>
