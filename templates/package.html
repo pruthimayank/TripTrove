@@ -90,9 +90,13 @@
     <section class="normal-section border-bottom" style="overflow: hidden;">
         <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('{{ itinerary.image }}');">
             <div class="col text-center">
-                <h1>{{ itinerary.title }}</h1>
-                <p>{{ itinerary.description }}</p>
             </div>
+        </div>
+    </section>
+    <section style="height: 100vh; background-color: #141414;" class="d-flex flex-column align-items-center justify-content-center">
+        <div style="position: relative; z-index: 1; text-align: center;">
+            <h1 style="transform: translateY(-15px); font-size: 8vh; font-family:serif;">{{itinerary.title}}</h1>
+            <h4 class="cinzel mx-4">{{itinerary.description}}</h4>
         </div>
     </section>
 {% empty %}
@@ -112,7 +116,7 @@
 {% block additional_js %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script>
+    <!-- <script>
         const zoomSections = document.querySelectorAll('.zoom');
         const maxScale = 1.6; // Maximum scale value
         const minScale = 1; // Minimum scale value
@@ -138,6 +142,6 @@
                 }
             });
         });
-    </script>
+    </script> -->
     
 {% endblock %}
