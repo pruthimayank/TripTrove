@@ -37,8 +37,8 @@
             justify-content: center;
             overflow: hidden;
             position: relative;
-            background-repeat: no-repeat;
-            background-size: cover;
+            /* background-repeat: no-repeat;
+            background-size: cover; */
         }
 
         .package-section::before {
@@ -61,17 +61,20 @@
 
 {% extends 'base.html' %}
 
+{% load static %}
 {% block content %}
 <div>
     {% for i in packages %}
-        <div class="row mx-0 border-bottom package-section" style="background-image: url('{{i.image}}');">
+        <div class="row mx-0 border-bottom package-section" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%), url('{{i.image}}'); background-size: cover; background-repeat: no-repeat;">
+        <!-- <div class="row mx-0 border-bottom package-section" style="background-image: url('{% static 'rajasthan/Jaisalmer/Gadisar Lake.jpeg' %}');"> -->
+        <!-- <div class="row mx-0 border-bottom package-section" style="background-image: url('../static/rajasthan/Jaipur/City\ Palace.webp');"> -->
             <div class="col-md-7 mt-2">
                 <section class="px-2 rounded-2">
                     <div class="d-flex flex-column justify-content-center p-2 h-100">
                         <small>{{i.description}}</small>
                         <h1>{{i.name}}</h1>
                         <br>
-                        <p>Check the booking history of your bookings Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid, odit maiores officiis nisi quis perspiciatis atque veritatis magni eos doloribus id voluptate nobis vel ea, vero necessitatibus fugiat soluta quae.</p>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid, odit maiores officiis nisi quis perspiciatis atque veritatis magni eos doloribus id voluptate nobis vel ea, vero necessitatibus fugiat soluta quae.</p>
                         <br>
                         {% if login == "loggedin" %}
                             <p>Get your booking confirm for {{user.firstname}} {{user.lastname}}</p>
@@ -83,20 +86,21 @@
             <div class="col-md-5 mt-2">
                 <br>
                 <br>
-                <br>
                 <div class="card border-0 p-3" style="background-color: transparent; color: white;">
                     <div class="d-flex flex-wrap align-items-center justify-content-between">
                         <div>
-                            <h5>Details:</h5>
+                            <!-- <h5>Details:</h5> -->
                             <!-- <h4>Status</h4> -->
                         </div>
                         <div>
-                            <a>check status</a>
+                            <!-- <a>check status</a> -->
                             <!-- <img width="60" height="60" src="https://img.icons8.com/dotty/ffffff/80/checked.png" alt="checked"/> -->
                         </div>
                     </div>
                     <!-- <p>We will get back to you soon!</p> -->
-                    <div class="mt-2 border border-light rounded-2 p-3" style="background-color: #00000055;">
+                    <div class="mt-2 border border-light rounded-2 p-3" style="min-height: 300px; background-color: #00000055;">
+                        <h5 class="text-center">Details</h5>
+                        <br>
                         <div class="d-flex flex-wrap align-items-center justify-content-between">
                             <h4 class="mt-2">Select Slot:</h4>
                             <div>
@@ -121,8 +125,8 @@
                         </div>
                     </div>
                     <div class="mt-2 border border-light rounded-2 p-3" style="background-color: #00000055;">
-                        <button type="button" class="btn btn-outline-light w-100 my-2" data-bs-toggle="modal" data-bs-target="#checkoutModal">Checkout</button>
-                        <button type="button" class="btn btn-outline-light w-100 my-2">View Package</button>
+                        <button type="button" class="btn btn-light w-100 my-2" data-bs-toggle="modal" data-bs-target="#checkoutModal">Checkout</button>
+                        <button type="button" class="btn btn-light w-100 my-2">View Package</button>
                     </div>
                 </div>
             <br>

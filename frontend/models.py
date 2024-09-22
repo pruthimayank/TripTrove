@@ -14,11 +14,8 @@ class Packages(models.Model):
 
 class agent(models.Model):
     username=models.CharField(max_length=100)
-    firstname=models.CharField(max_length=100)
-    lastname=models.CharField(max_length=100)
-    email=models.EmailField(max_length=100)
+    email=models.EmailField(null=True,blank=True, max_length=100)
     phone=models.IntegerField(null=True,blank=True)
-    address=models.CharField(max_length=500)
     password=models.CharField(max_length=100)
     bookinghistory=models.JSONField(max_length=100,null=True,blank=True)
 

@@ -56,7 +56,7 @@
         }
 
         .zoom {
-            transition: transform 0.2s ease;
+            transition: transform 1s ease;
         }
 
         .section-bg {
@@ -90,9 +90,13 @@
     <section class="normal-section border-bottom" style="overflow: hidden;">
         <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('{{ itinerary.image }}');">
             <div class="col text-center">
-                <h1>{{ itinerary.title }}</h1>
-                <p>{{ itinerary.description }}</p>
             </div>
+        </div>
+    </section>
+    <section style="height: 100vh; background-color: #141414;" class="d-flex flex-column align-items-center justify-content-center">
+        <div style="position: relative; z-index: 1; text-align: center;">
+            <h1 style="transform: translateY(-15px); font-size: 8vh; font-family:serif;">{{itinerary.title}}</h1>
+            <h4 class="cinzel mx-4">{{itinerary.description}}</h4>
         </div>
     </section>
 {% empty %}
@@ -104,18 +108,6 @@
         </div>
     </section>
 {% endfor %}
-
-            <div class="video-container2">
-                <video autoplay muted loop id="background-video">
-                    <source src="{{package.video}}" type="video/mp4">
-                </video>
-        
-                <section class="section" id="city-name">
-                    <div class="overlay"></div>
-                    <h1 class="fade-in">{{package.name}}</h1>
-                </section>
-            </div>
-
             
         </div>
     </main>
@@ -124,25 +116,32 @@
 {% block additional_js %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script>
+    <!-- <script>
         const zoomSections = document.querySelectorAll('.zoom');
-        const maxScale = 2; // Maximum scale value
-
+        const maxScale = 1.6; // Maximum scale value
+        const minScale = 1; // Minimum scale value
+    
         window.addEventListener('scroll', () => {
             const scrollPosition = window.scrollY;
-
+    
             zoomSections.forEach((section) => {
                 const sectionOffset = section.offsetTop;
                 const sectionHeight = section.offsetHeight;
                 const isInViewport = scrollPosition + window.innerHeight > sectionOffset && scrollPosition < sectionOffset + sectionHeight;
-
+    
                 if (isInViewport) {
-                    const scaleValue = Math.min(maxScale, 1 + (scrollPosition - sectionOffset + window.innerHeight) / (sectionHeight * 2));
+                    // Calculate the scroll percentage relative to the section
+                    const scrollInSection = scrollPosition + window.innerHeight - sectionOffset;
+                    const scrollPercent = Math.min(scrollInSection / (sectionHeight + window.innerHeight), 1);
+    
+                    // Gradually increase scale based on scroll percentage
+                    const scaleValue = minScale + (maxScale - minScale) * scrollPercent;
                     section.style.transform = `scale(${scaleValue})`;
                 } else {
-                    section.style.transform = `scale(1)`;
+                    section.style.transform = `scale(${minScale})`;
                 }
             });
         });
-    </script>
+    </script> -->
+    
 {% endblock %}

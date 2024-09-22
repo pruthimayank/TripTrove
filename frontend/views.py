@@ -7,40 +7,45 @@ import json
 # Login view
 def login(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
+        phone = request.POST.get('phone')
         password = request.POST.get('password')
 
-        try:
-            agent_instance = agent.objects.get(email=email)
-            
-            if password == agent_instance.password:
-                agent_data = agent.objects.filter(email=email)
-                request.session['user_data'] = list(agent_data.values())[0]
-                request.session['login'] = "loggedin"
-                return redirect('home') 
-            else:
-                return render(request, 'login.html', {'error': 'Invalid password'})
-        except agent.DoesNotExist:
-            return render(request, 'login.html', {'error': 'No such agent'})
-    else:
-        return render(request, 'login.html')
+        # Check if phone number already exists
+        if agent.objects.filter(phone=phone).exists():
+            try:
+                agent_instance = agent.objects.get(phone=phone)
+
+                if password == agent_instance.password:
+                    agent_data = agent.objects.filter(phone=phone)
+                    request.session['user_data'] = list(agent_data.values())[0]
+                    request.session['login'] = "loggedin"
+                    return redirect('home')
+                else:
+                    return render(request, 'login.html', {'error': 'Invalid password'})
+            except agent.DoesNotExist:
+                return render(request, 'login.html', {'error': 'No such agent'})
+        else:
+            return render(request, 'login.html', {'error': 'Phone number does not exist'})
+    
+    return render(request, 'login.html')
+
 
 
 # Signup view
 def signup(request):
     if request.method == 'POST':
         username = request.POST.get('username')
-        firstname = request.POST.get('firstname')
-        lastname = request.POST.get('lastname')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
-        address = request.POST.get('address')
         password = request.POST.get('password')
 
         if agent.objects.filter(username=username).exists():
             return render(request, 'signup.html', {'error': 'Username already taken'})
+        
+        if agent.objects.filter(phone=phone).exists():
+            return render(request, 'signup.html', {'error': 'Phone number already taken'})
 
-        new_agent = agent(username=username, firstname=firstname, lastname=lastname, email=email, phone=phone, address=address ,password=password)
+        new_agent = agent(username=username, email=email, phone=phone ,password=password)
         new_agent.save()
         return redirect('login') 
     else:
