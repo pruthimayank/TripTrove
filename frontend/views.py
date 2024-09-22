@@ -35,8 +35,6 @@ def login(request):
 def signup(request):
     if request.method == 'POST':
         username = request.POST.get('username')
-        firstname = request.POST.get('firstname')
-        lastname = request.POST.get('lastname')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         password = request.POST.get('password')
@@ -47,7 +45,7 @@ def signup(request):
         if agent.objects.filter(phone=phone).exists():
             return render(request, 'signup.html', {'error': 'Phone number already taken'})
 
-        new_agent = agent(username=username, firstname=firstname, lastname=lastname, email=email, phone=phone ,password=password)
+        new_agent = agent(username=username, email=email, phone=phone ,password=password)
         new_agent.save()
         return redirect('login') 
     else:
