@@ -86,7 +86,7 @@
             <div class="col-md-5 mt-2">
                 <br>
                 <br>
-                <div class="card border-0 p-3" style="background-color: transparent; color: white;">
+                <div class="card border-0 p-3" style="background-color: transparent; color: white;"></div>
                     <div class="d-flex flex-wrap align-items-center justify-content-between">
                         <div>
                             <!-- <h5>Details:</h5> -->
@@ -102,20 +102,23 @@
                         <h5 class="text-center">Details</h5>
                         <br>
                         <div class="d-flex flex-wrap align-items-center justify-content-between">
-                            <h4 class="mt-2">Select Slot:</h4>
+                            <h4 class="mt-2">Select Check-in Date:</h4>
                             <div>
-                                <select class="form-select" required>
-                                    <option value="slot1">Slot 1: 9:00 AM - 12:00 PM</option>
-                                    <option value="slot2">Slot 2: 12:00 PM - 3:00 PM</option>
-                                    <option value="slot3">Slot 3: 3:00 PM - 6:00 PM</option>
-                                </select>
+                                <input type="date" class="form-control" id="checkin-date" required>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-flex flex-wrap align-items-center justify-content-between">
+                            <h4 class="mt-2">Select Check-out Date:</h4>
+                            <div>
+                                <input type="date" class="form-control" id="checkout-date" required>
                             </div>
                         </div>
                         <br>
                         <div class="d-flex flex-wrap align-items-center justify-content-between">
                             <h4 class="mt-2">Guests:</h4>
                             <div>
-                                <input type="number" name="" class="form-control border-0" placeholder="Enter No. Of Guests">
+                                <input type="number" name="" class="form-control border-0 guest-count" placeholder="Enter No. Of Guests">
                             </div>
                         </div>
                         <br>
@@ -125,15 +128,14 @@
                         </div>
                     </div>
                     <div class="mt-2 border border-light rounded-2 p-3" style="background-color: #00000055;">
-                        <button type="button" class="btn btn-light w-100 my-2" data-bs-toggle="modal" data-bs-target="#checkoutModal">Checkout</button>
-                        <button type="button" class="btn btn-light w-100 my-2">View Package</button>
+                        <button type="button" class="btn btn-outline-light w-100 my-2" id="checkoutButton" data-bs-toggle="modal" data-bs-target="#checkoutModal">Checkout</button>
+                        <button type="button" class="btn btn-outline-light w-100 my-2">View Package</button>
                     </div>
                 </div>
             <br>
             </div>
         </div>
     {% endfor %}
-    <!-- Repeat other sections here (similar to Section 1) -->
 
     <!-- Modal Structure -->
     <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
@@ -157,23 +159,13 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="modal-slot-selection" class="form-label">Slot Start and End</label>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <select id="modal-slot-start" name="slot-start" class="form-select">
-                                        <option value="9:00 AM">9:00 AM</option>
-                                        <option value="12:00 PM">12:00 PM</option>
-                                        <option value="3:00 PM">3:00 PM</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <select id="modal-slot-end" name="slot-end" class="form-select">
-                                        <option value="12:00 PM">12:00 PM</option>
-                                        <option value="3:00 PM">3:00 PM</option>
-                                        <option value="6:00 PM">6:00 PM</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <label for="modal-checkin-date" class="form-label">Check-in Date</label>
+                            <input type="date" id="modal-checkin-date" name="slot-start" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="modal-checkout-date" class="form-label">Check-out Date</label>
+                            <input type="date" id="modal-checkout-date" name="slot-end" class="form-control" required>
                         </div>
 
                         <div class="mb-3">
@@ -192,7 +184,6 @@
 
 {% block additional_js %}
 <script>
-
     function updateGuestCount(change, pricePerGuest) {
         const guestCountInput = document.querySelector('.guest-count');
         let currentCount = parseInt(guestCountInput.value);
@@ -216,26 +207,20 @@
             checkoutButton.classList.remove('enabled');
         }
     }
+    function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
 
     // Update Modal Form with Slot and Amount from Main Form
     document.getElementById('checkoutButton').addEventListener('click', function() {
+        const checkinDate = document.getElementById('checkin-date').value;
+        const checkoutDate = document.getElementById('checkout-date').value;
         const totalAmount = document.getElementById('total-amount').textContent;
+
+        document.getElementById('modal-checkin-date').value = checkinDate;
+        document.getElementById('modal-checkout-date').value = checkoutDate;
         document.getElementById('modal-total-amount').value = totalAmount;
     });
-
-    // Function to get CSRF token from cookies
-    function getCSRFToken() {
-        let csrfToken = null;
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.startsWith('csrftoken=')) {
-                csrfToken = cookie.substring('csrftoken='.length);
-                break;
-            }
-        }
-        return csrfToken;
-    }
 
     document.getElementById('confirm-booking-form').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -244,32 +229,30 @@
         const bookingData = {
             first_name: document.getElementById('first-name').value,
             last_name: document.getElementById('last-name').value,
-            slot_start: document.getElementById('modal-slot-start').value,
-            slot_end: document.getElementById('modal-slot-end').value,
+            slot_start: document.getElementById('modal-checkin-date').value,
+            slot_end: document.getElementById('modal-checkout-date').value,
             total_amount: document.getElementById('modal-total-amount').value,
         };
 
         console.log("Booking data:", bookingData);
 
-        // Send JSON data to the server
         fetch('/booking/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken(),  // Fetch CSRF token here
+                'X-CSRFToken': getCSRFToken(),
             },
             body: JSON.stringify(bookingData),
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok. Status: ${response.status}`);
             }
             return response.json();
         })
         .then(data => {
             console.log("Server response:", data);
             if (data.status === 'success') {
-                // Redirect to the bookings page with a success flag
                 window.location.href = '/bookings/?success=true';
             } else {
                 console.error('Booking failed:', data.message);
@@ -279,8 +262,5 @@
             console.error('Error:', error);
         });
     });
-
-
-
 </script>
 {% endblock %}
