@@ -53,11 +53,12 @@
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
                             {% if post.image %}
-                                <img src="{{ post.image }}" class="card-img-top" alt="{{ post.title }}">
+                                <img src="{{ post.image }}" class="card-img-top" alt="{{ post.title }}" style="height: 300px;">
                             {% endif %}
                             <div class="card-body">
                                 <h5 class="card-title">{{ post.title }}</h5>
                                 <p class="card-text">{{ post.content|truncatewords:50 }}</p>
+                                <br>
                                 <p class="text-muted"><strong>Published on:</strong> {{ post.created_at|date:"F j, Y" }}</p>
                             </div>
                         </div>
