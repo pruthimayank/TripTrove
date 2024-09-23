@@ -12,7 +12,8 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('policies/', views.policies, name='policies'),
     path('terms/', views.terms, name='terms'),
-
+    path('blog/', views.blog_list, name='blog'),
+    
     #rest
     path('booking/', views.handle_booking, name='handle_booking')
 ]

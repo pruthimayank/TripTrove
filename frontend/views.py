@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Packages, agent  # Assuming 'agent' is the correct model for agents
+from .models import Packages, agent , BlogPost  # Assuming 'agent' is the correct model for agents
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -263,3 +263,10 @@ def handle_booking(request):
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+def blog_list(request):
+    posts = BlogPost.objects.all().order_by('-created_at')  # Fetch all blog posts ordered by creation date
+    context = {
+        'posts': posts,
+    }
+    return render(request, 'blog_list.html', context)
