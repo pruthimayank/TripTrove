@@ -250,7 +250,7 @@
                 {% csrf_token %}
               <p class="text-muted">Double check the spellings, to avoid modifications later.<br> Ensure the name and the spelling matches with that on the valid government ID you will be carrying.</p>
               
-              <form>
+              <form id="addTouristForm">
                 <div class="mb-3">
                     <div class="btn-group" role="group" aria-label="Gender Selection">
                       <input type="radio" name="gender" id="male" value="male" autocomplete="off" checked> &nbsp;
@@ -292,15 +292,30 @@
                 </div>
       
                 <div class="mt-5">
-                  <button type="button" class="btn btn-dark">+ Save and Add More</button>
-                  <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Save and close</button>
+                  <button type="button" class="btn btn-dark" id="saveAndAddMoreBtn" onclick="saveTouristDetails()">+ Save and Add More</button>
+                  <button type="button" class="btn btn-outline-dark" id="bookNowBtn" onclick="handleBookNow()">Book Now</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-      
+
+    <!-- Summary Modal -->
+    <div class="modal fade" id="bookingSummaryModal" tabindex="-1" aria-labelledby="bookingSummaryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="bookingSummaryModalLabel">Booking Summary</h5>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                   <div id="bookingSummary"></div>
+                   <button type="button" class="btn btn-primary" onclick="confirmBooking()">Confirm Booking</button>
+               </div>
+           </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
@@ -309,82 +324,98 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+    // The showcheckbox function
     function showcheckbox(name) {
         const checkbox = document.querySelector(`.${name}check`);
         if (checkbox) {
             checkbox.disabled = !checkbox.disabled;
         }
     }
-
-    function updateGuestCount(change, pricePerGuest) {
-        const guestCountInput = document.querySelector('.guest-count');
-        let currentCount = parseInt(guestCountInput.value);
-        currentCount += change;
-        if (currentCount < 1) {
-            currentCount = 1;
-        }
-        guestCountInput.value = currentCount;
-        document.querySelector('.total-amount').textContent = pricePerGuest * currentCount;
+    let touristData = [];
+    
+    function openTouristModal() {
+        // Reset tourist data if needed when opening the modal for the first time
+        document.getElementById('saveAndAddMoreBtn').disabled = false;
+        document.getElementById('bookNowBtn').style.display = 'block'; // Ensure "Book Now" button is visible
+        $('#addTouristModal').modal('show'); // Show the modal
     }
 
-    function toggleCheckoutButton() {
-        const termsCheck = document.getElementById('termsCheck');
-        const checkoutButton = document.getElementById('checkoutButton');
-        checkoutButton.disabled = !termsCheck.checked;
-        if (termsCheck.checked) {
-            checkoutButton.classList.add('enabled');
+    function saveTouristDetails() {
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const age = document.getElementById('age').value;
+        const gender = document.querySelector('input[name="gender"]:checked').value;
+        const passengerContact = document.getElementById('passengerContact').value;
+        const guardianContact = document.getElementById('guardianContact').value;
+
+        // Check if all required fields are filled
+        if (firstName && lastName && age && passengerContact) {
+            const tourist = {
+                firstName,
+                lastName,
+                age,
+                gender,
+                passengerContact,
+                guardianContact,
+            };
+
+            touristData.push(tourist); // Store the tourist data in the array
+
+            // Reset the form for the next tourist entry
+            document.getElementById('addTouristForm').reset();
+
+            // Keep the modal open so users can continue adding tourists
+            $('#addTouristModal').modal('show');
         } else {
-            checkoutButton.classList.remove('enabled');
+            alert('Please fill out all required fields.');
         }
     }
-    function getCSRFToken() {
-        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    function showBookingSummary() {
+        let summaryHtml = '';
+        touristData.forEach((tourist, index) => {
+            summaryHtml += `
+                <p>Tourist ${index + 1}: ${tourist.firstName} ${tourist.lastName}, Age: ${tourist.age}, Contact: ${tourist.passengerContact}</p>
+            `;
+        });
+        document.getElementById('bookingSummary').innerHTML = summaryHtml;
+        $('#bookingSummaryModal').modal('show'); // Show the booking summary modal
     }
 
-    document.getElementById('checkoutButton').addEventListener('click', function() {
-        const checkinDate = document.getElementById('checkin-date').value;
-        const checkoutDate = document.getElementById('checkout-date').value;
-        const totalAmount = document.getElementById('total-amount').textContent;
+    // "Book Now" button click handler
+    function handleBookNow() {
+        $('#addTouristModal').modal('hide'); // Hide the "Add Tourist" modal
+        showBookingSummary(); // Show the booking summary
+    }
 
-        document.getElementById('modal-checkin-date').value = checkinDate;
-        document.getElementById('modal-checkout-date').value = checkoutDate;
-        document.getElementById('modal-total-amount').value = totalAmount;
-    });
-
-    document.getElementById('confirm-booking-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const bookingData = {
-            first_name: document.getElementById('first-name').value,
-            last_name: document.getElementById('last-name').value,
-            slot_start: document.getElementById('modal-checkin-date').value,
-            slot_end: document.getElementById('modal-checkout-date').value,
-            total_amount: document.getElementById('modal-total-amount').value,
-        };
-
-        fetch('/booking/', {
+    function confirmBooking() {
+        fetch('/handle-booking/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCSRFToken(),
             },
-            body: JSON.stringify(bookingData),
+            body: JSON.stringify({ tourists: touristData }),
         })
         .then(response => {
-            if (!response.ok) {
-                throw new Error(`Network response was not ok. Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.status === 'success') {
+            if (response.ok) {
                 window.location.href = '/bookings/?success=true';
             } else {
-                console.error('Booking failed:', data.message);
+                throw new Error('Booking failed');
             }
         })
         .catch(error => {
             console.error('Error:', error);
         });
-    });
+    }
+
+    function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
 </script>
+<!-- Add jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Add Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 {% endblock %}

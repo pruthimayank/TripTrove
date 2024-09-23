@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Packages, agent , BlogPost  # Assuming 'agent' is the correct model for agents
+from .models import Packages, agent, BlogPost  # Assuming 'agent' is the correct model for agents
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -11,11 +11,9 @@ def login(request):
         phone = request.POST.get('phone')
         password = request.POST.get('password')
 
-        # Check if phone number already exists
         if agent.objects.filter(phone=phone).exists():
             try:
                 agent_instance = agent.objects.get(phone=phone)
-
                 if password == agent_instance.password:
                     agent_data = agent.objects.filter(phone=phone)
                     request.session['user_data'] = list(agent_data.values())[0]
@@ -29,8 +27,6 @@ def login(request):
             return render(request, 'login.html', {'error': 'Phone number does not exist'})
     
     return render(request, 'login.html')
-
-
 
 # Signup view
 def signup(request):
@@ -51,7 +47,6 @@ def signup(request):
         return redirect('login') 
     else:
         return render(request, 'signup.html')
-
 
 # Home view
 def home(request):
@@ -109,7 +104,7 @@ def packages(request):
     packages = Packages.objects.all()
     packages_list = list(packages.values())
     if login == 'loggedin':
-        data={
+        data = {
             'user': request.session.get('user_data'),
             'login': 'loggedin',
             'packages': packages_list
@@ -122,17 +117,16 @@ def packages(request):
             'packages': packages_list
         }
         return render(request, 'packages.html', data)
-    
+
 def bookings(request):
     user = request.session.get('user_data')
     login = request.session.get('login')
 
     if login == 'loggedin' and user:
         agent_instance = agent.objects.get(id=user['id'])
-
         booking_history = agent_instance.bookinghistory if agent_instance.bookinghistory else []
+        current_date = datetime.now().date()
 
-        current_date = datetime.now().date()  
         for booking in booking_history:
             booking['slot_start'] = datetime.strptime(booking['slot_start'], '%Y-%m-%d').date()
             booking['slot_end'] = datetime.strptime(booking['slot_end'], '%Y-%m-%d').date()
@@ -140,19 +134,18 @@ def bookings(request):
         return render(request, 'bookings.html', {
             'user': user,
             'login': login,
-            'current_date': current_date, 
-            'booking_history': booking_history  
+            'current_date': current_date,
+            'booking_history': booking_history
         })
     else:
         return redirect('login')
-
 
 def about(request):
     user = request.session.get('user_data')
     login = request.session.get('login')
     
     if login == 'loggedin':
-        data={
+        data = {
             'user': request.session.get('user_data'),
             'login': 'loggedin'
         }
@@ -163,13 +156,13 @@ def about(request):
             'login': 'notloggedin'
         }
         return render(request, 'about.html', data)
-    
+
 def policies(request):
     user = request.session.get('user_data')
     login = request.session.get('login')
     
     if login == 'loggedin':
-        data={
+        data = {
             'user': request.session.get('user_data'),
             'login': 'loggedin'
         }
@@ -180,13 +173,13 @@ def policies(request):
             'login': 'notloggedin'
         }
         return render(request, 'policies.html', data)
-    
+
 def terms(request):
     user = request.session.get('user_data')
     login = request.session.get('login')
     
     if login == 'loggedin':
-        data={
+        data = {
             'user': request.session.get('user_data'),
             'login': 'loggedin'
         }
@@ -198,13 +191,11 @@ def terms(request):
         }
         return render(request, 'terms.html', data)
 
-    
 def logout(request):
     request.session.flush()
     return redirect('login')
 
-
-#rest
+# Handle booking - REST API view
 @csrf_exempt
 def handle_booking(request):
     if request.method == 'POST':
@@ -243,7 +234,7 @@ def handle_booking(request):
             new_booking = {
                 'first_name': first_name,
                 'last_name': last_name,
-                'slot_start': slot_start_date.isoformat(),  # Store as ISO formatted string
+                'slot_start': slot_start_date.isoformat(),
                 'slot_end': slot_end_date.isoformat(),
                 'total_amount': total_amount
             }
@@ -265,7 +256,7 @@ def handle_booking(request):
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
 
 def blog_list(request):
-    posts = BlogPost.objects.all().order_by('-created_at')  # Fetch all blog posts ordered by creation date
+    posts = BlogPost.objects.all().order_by('-created_at')
     context = {
         'posts': posts,
     }
