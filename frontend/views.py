@@ -90,7 +90,7 @@ def package(request, package):
             }
             return render(request, 'package.html', data)
         else:
-            return render(request, '404.html', {'error': 'Package not found'})
+            return render(request, 'package.html', {'error': 'Package not found'})
     else:
         if package:
             data = {
@@ -100,7 +100,7 @@ def package(request, package):
             }
             return render(request, 'package.html', data)
         else:
-            return render(request, '404.html', {'error': 'Package not found'})
+            return render(request, 'package.html', {'error': 'Package not found'})
 
 def packages(request):
     user = request.session.get('user_data')
@@ -134,8 +134,10 @@ def bookings(request):
 
         current_date = datetime.now().date()  
         for booking in booking_history:
-            booking['slot_start'] = datetime.strptime(booking['slot_start'], '%Y-%m-%d').date()
-            booking['slot_end'] = datetime.strptime(booking['slot_end'], '%Y-%m-%d').date()
+            # booking['slot_start'] = datetime.strptime(booking['slot_start'], '%Y-%m-%d').date()
+            # booking['slot_end'] = datetime.strptime(booking['slot_end'], '%Y-%m-%d').date()
+            booking['slot_start'] = ""
+            booking['slot_end'] = ""
 
         return render(request, 'bookings.html', {
             'user': user,
