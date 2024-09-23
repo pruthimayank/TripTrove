@@ -1,0 +1,47 @@
+[
+    {
+        "title": "Chamunda Mata Temple",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jodhpur/Chamunda mata Temple.webp",
+        "description": "A sacred temple dedicated to Chamunda Mata, located in the Mehrangarh Fort, offering panoramic views of Jodhpur."
+    }, 
+    {
+        "title": "Clock Tower",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jodhpur/Clock tower.jpg",
+        "description": "A famous landmark in Jodhpur, this vibrant clock tower is located in the heart of the bustling Sardar Market."
+    }, 
+    {
+        "title": "Jaswant Thada",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jodhpur/Jaswant-Thada-Jodhpur.jpg",
+        "description": "A stunning marble cenotaph built in memory of Maharaja Jaswant Singh II, offering serene views of the surrounding city."
+    }, 
+    {
+        "title": "Mandore Garden",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jodhpur/mandore garden jodhpur.jpg",
+        "description": "An ancient garden known for its cenotaphs of former rulers, beautiful architecture, and a peaceful environment."
+    }, 
+    {
+        "title": "Mehrangarh Fort",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jodhpur/Mehrangar fort.webp",
+        "description": "One of the largest forts in India, Mehrangarh Fort is a symbol of Rajasthan's rich history and offers breathtaking views of the blue city."
+    }, 
+    {
+        "title": "Mahamandir Temple",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jodhpur/Mahamandir Temple.jpg",
+        "description": "An ancient temple known for its intricate carvings and beautiful architecture, dedicated to Lord Shiva."
+    }, 
+    {
+        "title": "Rao Jodha Desert Rock Park",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jodhpur/Rao Jodha desert rock park.jpg",
+        "description": "A unique park showcasing the natural beauty of the Thar Desert’s ecosystem, located at the foot of Mehrangarh Fort."
+    },
+    {
+        "title": "Rao Jodha Statue",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jodhpur/Rao Jodha Statue.jpg",
+        "description": "A statue honoring Rao Jodha, the founder of Jodhpur, located near Mehrangarh Fort."
+    }, 
+    {
+        "title": "Toorji Ka Jhalara (Stepwell)",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jodhpur/toorji-ka-jhalara-stepwell-jodhpur.jpg",
+        "description": "A historic stepwell that reflects the rich heritage of Rajasthan’s architecture and is a serene spot to visit in Jodhpur."
+    }
+]

@@ -1,0 +1,57 @@
+[
+    {
+        "title": "Bada Bagh",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaisalmer/Bada-Bagh.jpg",
+        "description": "A garden complex with royal cenotaphs that offer a glimpse into Jaisalmer's rich history and stunning views of the desert."
+    }, 
+    {
+        "title": "Desert National Park",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaisalmer/desert national park jaisalmer.avif",
+        "description": "A protected area in the Thar Desert, offering a chance to experience desert wildlife and ecosystems."
+    }, 
+    {
+        "title": "Gadisar Lake",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaisalmer/Gadisar Lake.jpeg",
+        "description": "A man-made lake in Jaisalmer, surrounded by temples and shrines, offering scenic views and boat rides."
+    }, 
+    {
+        "title": "Jain Temples (Inside Jaisalmer Fort)",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaisalmer/jain_temple.jpg",
+        "description": "A series of intricately designed temples located within Jaisalmer Fort, known for their beautiful architecture and historical significance."
+    }, 
+    {
+        "title": "Kuldhara Village",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaisalmer/Kuldhara_an_abandoned_village.jpg",
+        "description": "An abandoned village on the outskirts of Jaisalmer, known for its mysterious history and ghostly legends."
+    }, 
+    {
+        "title": "Longewala War Memorial",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaisalmer/Longewala War Memorial.webp",
+        "description": "A tribute to the soldiers of the Indo-Pak war of 1971, located near the border and offering an immersive experience of India's war history."
+    }, 
+    {
+        "title": "Nathmal Ki Haveli",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaisalmer/Nathmal Ki Haveli.png",
+        "description": "An exquisite haveli with intricate carvings, showcasing the grandeur and craftsmanship of Jaisalmer's golden era."
+    }, 
+    {
+        "title": "Patwon Ki Haveli",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaisalmer/Patwon_ki_Haveli_Jaisalmer.jpg",
+        "description": "A famous haveli in Jaisalmer, known for its detailed architecture and fascinating history."
+    }, 
+    {
+        "title": "Salim Singh Ki Haveli",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaisalmer/Salim Singh Ki Haveli.jpg",
+        "description": "A historic haveli with a distinct arched roof, known for its unique design and historical importance."
+    }, 
+    {
+        "title": "Tanot Mata Temple",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaisalmer/Tanot Mata Temple.jpg",
+        "description": "A temple near the Indo-Pak border, associated with the miraculous survival of the area during heavy shelling in the 1971 war."
+    },
+    {
+        "title": "Vyas Chhatri",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaisalmer/Vyas Chhatri.webp",
+        "description": "A collection of cenotaphs dedicated to the sage Vyasa, offering panoramic views of Jaisalmer and its golden dunes."
+    }
+]

@@ -1,0 +1,42 @@
+[
+    {
+        "title": "Albert Hall Museum (Night View)",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/Albert_Hall_Museum_Night_View.jpg",
+        "description": "A stunning view of Albert Hall Museum, beautifully illuminated at night, showcasing the rich history of Jaipur."
+    }, 
+    {
+        "title": "Amber Fort",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/amber_fort.webp",
+        "description": "A majestic fort located on the outskirts of Jaipur, known for its stunning architecture and scenic surroundings."
+    },
+    {
+        "title": "City Palace",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/City Palace.webp",
+        "description": "The royal residence of the Maharaja of Jaipur, City Palace is known for its beautiful courtyards, gardens, and museums."
+    }, 
+    {
+        "title": "Hawa Mahal",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/Hawa Mahal.jpeg",
+        "description": "The iconic palace of winds, known for its intricate facade and designed to allow royal women to observe street festivals."
+    }, 
+    {
+        "title": "Jaigarh Fort",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/jaigarh fort.webp",
+        "description": "A grand fort built to protect Amber Fort, offering stunning views of Jaipur and housing the world's largest cannon on wheels."
+    }, 
+    {
+        "title": "Jal Mahal",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/jal mahal.jpeg",
+        "description": "A beautiful palace located in the middle of Man Sagar Lake, Jal Mahal is a serene site offering picturesque views."
+    }, 
+    {
+        "title": "Jantar Mantar",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/Jantar mantar.jpg",
+        "description": "An astronomical observatory built in the 18th century, featuring the world's largest stone sundial and other instruments."
+    }, 
+    {
+        "title": "Nahargarh Fort",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/nahargarh fort.png",
+        "description": "Situated on the edge of the Aravalli Hills, Nahargarh Fort offers panoramic views of Jaipur and is a popular spot for sunsets."
+    }
+]

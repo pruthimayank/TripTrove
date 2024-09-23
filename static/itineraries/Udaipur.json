@@ -1,0 +1,47 @@
+[
+    {
+        "title": "City Palace",
+        "image": "http://127.0.0.1:8000/static/rajasthan/udaipur/City Palace.avif",
+        "description": "The City Palace in Udaipur is a majestic architectural wonder, offering a glimpse into Rajasthan’s royal history."
+    }, 
+    {
+        "title": "Eklingji Temple",
+        "image": "http://127.0.0.1:8000/static/rajasthan/udaipur/eklingji temple.jpg",
+        "description": "A famous Hindu temple dedicated to Lord Shiva, located in the Udaipur district."
+    }, 
+    {
+        "title": "Haldighati",
+        "image": "http://127.0.0.1:8000/static/rajasthan/udaipur/Haldighati.JPG",
+        "description": "A famous mountain pass in Rajasthan, known for the historical battle fought between Maharana Pratap and the Mughals."
+    }, 
+    {
+        "title": "Jagdish Temple",
+        "image": "http://127.0.0.1:8000/static/rajasthan/udaipur/Jagdish Temple.jpg",
+        "description": "A large Hindu temple in Udaipur, known for its beautiful architecture and dedication to Lord Vishnu."
+    }, 
+    {
+        "title": "Karni Mata Mandir Ropeway",
+        "image": "http://127.0.0.1:8000/static/rajasthan/udaipur/Karni Mata Mandir ropeway.png",
+        "description": "A temple dedicated to Karni Mata, offering a ropeway for visitors to enjoy panoramic views of Udaipur."
+    }, 
+    {
+        "title": "Kumbhalgarh Fort",
+        "image": "http://127.0.0.1:8000/static/rajasthan/udaipur/Kumbhalgarh.jpg",
+        "description": "A UNESCO World Heritage Site, Kumbhalgarh Fort is one of the largest forts in the world, known for its massive walls."
+    }, 
+    {
+        "title": "Lake Pichola",
+        "image": "http://127.0.0.1:8000/static/rajasthan/udaipur/Lake Pichola.jpg",
+        "description": "A beautiful man-made lake, known for boat rides to Jag Mandir Island, offering stunning views of the City Palace and surrounding hills."
+    }, 
+    {
+        "title": "Saheliyon Ki Bari",
+        "image": "http://127.0.0.1:8000/static/rajasthan/udaipur/saheliyon ki bari.jpg",
+        "description": "A beautiful garden built for the queen and her maids, known for its fountains, lotus pools, and marble pavilions."
+    }, 
+    {
+        "title": "Sajjangarh Palace",
+        "image": "http://127.0.0.1:8000/static/rajasthan/udaipur/sajjangarh.jpg",
+        "description": "Also known as the Monsoon Palace, it offers a panoramic view of Udaipur and is a great spot to witness sunsets."
+    }
+]
