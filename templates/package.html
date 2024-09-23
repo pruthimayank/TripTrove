@@ -9,7 +9,7 @@
     /* Container for the video background */
     .video-container {
         position: relative;
-        height: 200vh; /* To cover both sections */
+        height: 300vh; /* To cover both sections */
     }
     .video-container2 {
         position: relative;
@@ -45,8 +45,9 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for better text visibility */
-        z-index: 0;
+        background: rgba(0, 0, 0, 0); /* Start with transparent */
+        transition: background 0.5s ease;
+        z-index: 0; /* Ensure it's behind the content */
     }
 
     h1, p {
@@ -65,6 +66,15 @@
         height: 100vh; /* Full viewport height */
     }
 </style>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+    .cinzel {
+        font-family: "Cinzel", serif;
+        font-optical-sizing: auto;
+        font-weight: 500;
+        font-style: normal;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -74,15 +84,42 @@
                 <source src="{{package.video}}" type="video/mp4">
             </video>
 
-            <section class="section" id="city-name">
-                <div class="overlay"></div>
-                <h1 class="fade-in packageName">{{package.name}}</h1>
-            </section>
+            <div class="sectionvideo">
+                <section class="section" id="city-name">
+                    <div class="overlay"></div>
+                    <div style="position: relative; z-index: 1; text-align: center;">
+                        <h3 class="cinzel">{{package.description}}</h3>
+                        <h1 style="transform: translateY(-15px); font-size: 16vh; font-family: serif; text-transform: uppercase;">
+                            {{package.name}}
+                        </h1>                        
+                        <br>
+                        <div class="w-100 text-center">
+                            <div class="my-5">
+                                <a href="/package/{{package.name}}/" class="mt-1 btn btn-outline-light rounded-5" style="width: 200px; text-decoration: none;">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
-            <section class="section" id="city-description">
-                <div class="overlay"></div>
-                <p class="fade-in">{{package.description}}</p>
-            </section>
+                <section class="section">
+                    <div class="overlay"></div>
+                    <div>
+                        <h1 class="cinzel" style="font-size: 4rem;">A royal journey through <br> heritage</h1>
+                    </div>
+                </section>
+    
+                <section class="section">
+                    <div class="overlay"></div>
+                    <div class="position-relative row mx-0" style="z-index: 1;">
+                        <div class="col-md-6">
+                            <h1 class="cinzel mt-2" style="font-size: 2.7rem;">{{package.description}}</h1>
+                        </div>
+                        <div class="col-md-4 text-start">
+                            <p style="font-size: x-large;">{{package.details}}</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
 
         <div>
@@ -132,4 +169,28 @@
 {% block additional_js %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script>
+        window.addEventListener('scroll', function() {
+            const overlayElements = document.querySelectorAll('.sectionvideo');
+            
+            overlayElements.forEach((overlay, index) => {
+                const scrollY = window.scrollY;
+                const sectionHeight = window.innerHeight; // height of the viewport
+                const maxScroll = sectionHeight * (index + 1);
+
+                // Calculate the opacity based on scroll position
+                let opacity = 0.2; // Default opacity
+
+                if (scrollY > maxScroll) {
+                    // Increase opacity as you scroll down
+                    opacity += (scrollY - maxScroll) / (sectionHeight * 0.5); // Adjust divisor for speed
+                }
+                opacity = Math.min(opacity, 0.8); // Cap the max opacity at 0.6
+                
+                overlay.style.background = `rgba(0, 0, 0, ${opacity})`;
+            });
+        });
+    </script>
+
+    
 {% endblock %}  

@@ -5,7 +5,8 @@ class Packages(models.Model):
     name = models.CharField(max_length=100)
     image = models.CharField(max_length=1000)
     video = models.CharField(max_length=1000)
-    description = models.TextField()
+    description = models.TextField() # tagline for package
+    details = models.TextField(null=True,blank=True) # actual paragraph for it
     price = models.IntegerField(null=True,blank=True)
     itineraries = models.JSONField(null=True, blank=True) 
 
