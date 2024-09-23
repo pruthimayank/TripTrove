@@ -116,32 +116,5 @@
 {% block additional_js %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <!-- <script>
-        const zoomSections = document.querySelectorAll('.zoom');
-        const maxScale = 1.6; // Maximum scale value
-        const minScale = 1; // Minimum scale value
-    
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY;
-    
-            zoomSections.forEach((section) => {
-                const sectionOffset = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
-                const isInViewport = scrollPosition + window.innerHeight > sectionOffset && scrollPosition < sectionOffset + sectionHeight;
-    
-                if (isInViewport) {
-                    // Calculate the scroll percentage relative to the section
-                    const scrollInSection = scrollPosition + window.innerHeight - sectionOffset;
-                    const scrollPercent = Math.min(scrollInSection / (sectionHeight + window.innerHeight), 1);
-    
-                    // Gradually increase scale based on scroll percentage
-                    const scaleValue = minScale + (maxScale - minScale) * scrollPercent;
-                    section.style.transform = `scale(${scaleValue})`;
-                } else {
-                    section.style.transform = `scale(${minScale})`;
-                }
-            });
-        });
-    </script> -->
     
 {% endblock %}

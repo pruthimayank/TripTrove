@@ -10,6 +10,8 @@ urlpatterns = [
     path('packages/', views.packages, name='packages'),
     path('bookings/', views.bookings, name='bookings'),
     path('about/', views.about, name='about'),
+    path('policies/', views.policies, name='policies'),
+    path('terms/', views.terms, name='terms'),
 
     #rest
     path('booking/', views.handle_booking, name='handle_booking')

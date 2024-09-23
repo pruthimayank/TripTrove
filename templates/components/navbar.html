@@ -73,6 +73,17 @@
         opacity: 0;
         transform: translateY(-20px);
     }
+
+    .navbar-brand{
+        left: 45%;
+    }
+
+    @media screen and (max-width: 768px) {
+        .navbar-brand{
+            left: 40%;
+        }
+    }
+    
 </style>
 <nav class="navbar navbar-lightt w-100" style="background-color: #00000041; position: fixed; top: 0; z-index: 1000; height: 70px;">
     <div class="container-fluid">
@@ -92,7 +103,7 @@
                 <li><a class="dropdown-item px-4 py-2" href="/about">About Us</a></li>
             </ul>
         </div>
-        <a class="navbar-brand position-absolute text-white" style="left: 45%;" href="/">
+        <a class="navbar-brand position-absolute text-white" href="/">
             <h3>TakeMeFar</h3>
         </a>
         <div>
