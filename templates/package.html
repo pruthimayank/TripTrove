@@ -5,66 +5,66 @@
 
 {% load static %}
 {% block additional_css %}
-    <style>
-        /* Container for the video background */
-        .video-container {
-            position: relative;
-            height: 200vh; /* To cover both sections */
-        }
-        .video-container2 {
-            position: relative;
-            height: 100vh; /* To cover both sections */
-        }
+<style>
+    /* Container for the video background */
+    .video-container {
+        position: relative;
+        height: 200vh; /* To cover both sections */
+    }
+    .video-container2 {
+        position: relative;
+        height: 100vh; /* To cover both sections */
+    }
 
-        /* Background video settings */
-        #background-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1; /* Keep video behind everything */
-        }
+    /* Background video settings */
+    #background-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1; /* Keep video behind everything */
+    }
 
-        .section {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-            z-index: 1; /* Ensure text is on top of video */
-            overflow: hidden; /* Prevent overflow */
-        }
+    .section {
+        position: relative;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+        z-index: 1; /* Ensure text is on top of video */
+        overflow: hidden; /* Prevent overflow */
+    }
 
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for better text visibility */
-            z-index: 0;
-        }
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for better text visibility */
+        z-index: 0;
+    }
 
-        h1, p {
-            margin: 0;
-            padding: 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
+    h1, p {
+        margin: 0;
+        padding: 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
 
-        .zoom {
-            transition: transform 1s ease;
-        }
+    .zoom {
+        transition: transform 1s ease;
+    }
 
-        .section-bg {
-            background-size: cover;
-            background-position: center;
-            height: 100vh; /* Full viewport height */
-        }
-    </style>
+    .section-bg {
+        background-size: cover;
+        background-position: center;
+        height: 100vh; /* Full viewport height */
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -85,16 +85,35 @@
             </section>
         </div>
 
-        <div>   
+        <div>
             {% for itinerary in package.itineraries %}
                 <section class="normal-section border-bottom" style="overflow: hidden;">
-                    <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('{{ itinerary.image }}');">
-                    </div>
+                    {% if itinerary.image %}
+                        <div class="row justify-content-center align-items-center h-100 section-bg zoom" 
+                             style="background-image: url('{{ itinerary.image }}');">
+                        </div>
+                    {% elif itinerary.video %}
+                        <div style="position: relative; height: 100vh;">
+                            <video autoplay loop muted style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+                                <source src="{{ itinerary.video }}" type="video/mp4">
+                            </video>
+                            <div class="row justify-content-center align-items-center h-100" style="position: relative; z-index: 1;">
+                                <!-- text over video -->
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400');">
+                            <div class="col text-center">
+                                <h1>No media available</h1>
+                            </div>
+                        </div>
+                    {% endif %}
                 </section>
+                
                 <section style="height: 100vh; background-color: #141414;" class="d-flex flex-column align-items-center justify-content-center">
                     <div style="position: relative; z-index: 1; text-align: center;">
-                        <h1 style="transform: translateY(-15px); font-size: 8vh; font-family:serif;">{{itinerary.title}}</h1>
-                        <h4 class="cinzel mx-4">{{itinerary.description}}</h4>
+                        <h1 style="transform: translateY(-15px); font-size: 8vh; font-family: serif;">{{ itinerary.title }}</h1>
+                        <h4 class="cinzel mx-4">{{ itinerary.description }}</h4>
                     </div>
                 </section>
             {% empty %}
@@ -106,7 +125,7 @@
                     </div>
                 </section>
             {% endfor %}
-        </div>
+        </div>              
     </main>
 {% endblock %}
 

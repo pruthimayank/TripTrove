@@ -1,42 +1,52 @@
 [
     {
-        "title": "Albert Hall Museum (Night View)",
-        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/Albert_Hall_Museum_Night_View.jpg",
-        "description": "A stunning view of Albert Hall Museum, beautifully illuminated at night, showcasing the rich history of Jaipur."
-    }, 
-    {
-        "title": "Amber Fort",
-        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/amber_fort.webp",
-        "description": "A majestic fort located on the outskirts of Jaipur, known for its stunning architecture and scenic surroundings."
-    },
-    {
-        "title": "City Palace",
-        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/City Palace.webp",
-        "description": "The royal residence of the Maharaja of Jaipur, City Palace is known for its beautiful courtyards, gardens, and museums."
-    }, 
-    {
         "title": "Hawa Mahal",
         "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/Hawa Mahal.jpeg",
-        "description": "The iconic palace of winds, known for its intricate facade and designed to allow royal women to observe street festivals."
-    }, 
-    {
-        "title": "Jaigarh Fort",
-        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/jaigarh fort.webp",
-        "description": "A grand fort built to protect Amber Fort, offering stunning views of Jaipur and housing the world's largest cannon on wheels."
-    }, 
-    {
-        "title": "Jal Mahal",
-        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/jal mahal.jpeg",
-        "description": "A beautiful palace located in the middle of Man Sagar Lake, Jal Mahal is a serene site offering picturesque views."
+        "description": "Stand before the iconic Hawa Mahal and feel the breeze through its 953 intricately carved windows as it once did for royal women. This delicate masterpiece in the heart of Jaipur invites you to witness a regal view of the bustling city below while marveling at its pink sandstone façade that glows at sunrise."
     }, 
     {
         "title": "Jantar Mantar",
         "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/Jantar mantar.jpg",
-        "description": "An astronomical observatory built in the 18th century, featuring the world's largest stone sundial and other instruments."
+        "description": " Step into the world of ancient astronomy at Jantar Mantar, where massive stone instruments were used to measure the heavens. It’s not just science—it’s a place that connects you to the wisdom of the past, offering a contemplative experience of wonder under the vast Rajasthani sky."
+    }, 
+    {
+        "title": "Chokhi Dhani",
+        "video": "http://127.0.0.1:8000/static/rajasthan/jaipur/Choki dhanni.mp4",
+        "description": "At Chokhi Dhani, a world of Rajasthani tradition unfolds before you. Imagine dining under the stars, feasting on rich, authentic Rajasthani delicacies while musicians serenade you with folk tunes. From camel rides to vibrant puppet shows, from the thrill of magic performances to traditional dance, Chokhi Dhani offers an immersive experience in the heart of Rajasthan’s culture. It's a journey of indulgence, a celebration of vibrant rural life, wrapped in the warmth of genuine hospitality."
+    }, 
+    {
+        "title": "Amber Fort",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/amber_fort.webp",
+        "description": "Experience grandeur like never before as you ascend to the magnificent Amber Fort on a royal elephant ride. As you enter, the fort’s golden hues welcome you into a world of lavish courtyards, mirror-studded halls, and breathtaking views of Maota Lake below. The cool marble floors beneath your feet, the intricate frescoes, and the gentle whispers of history make Amber Fort a place where royalty once lived and now, where you can walk in their footsteps. As dusk falls, the fort’s illuminated walls tell stories through a spectacular light and sound show, offering an unforgettable blend of history and luxury."
+    },
+    {
+        "title": "Jaigarh Fort",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/jaigarh fort.webp",
+        "description": "Perched high on the Aravalli hills, Jaigarh Fort stands as a silent sentinel of Rajasthan’s military pride. Known for its formidable cannons, including the world’s largest, this fort offers sweeping views of Amber Fort and the desert landscape. Walk through its grand corridors, feel the might of Rajasthan’s warriors, and let the views from its battlements leave you in awe of its enduring strength."
     }, 
     {
         "title": "Nahargarh Fort",
         "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/nahargarh fort.png",
-        "description": "Situated on the edge of the Aravalli Hills, Nahargarh Fort offers panoramic views of Jaipur and is a popular spot for sunsets."
+        "description": "Perched on the edge of the Aravalli Hills, Nahargarh Fort is the perfect place for those who seek a moment of quiet luxury. The views of Jaipur from its ramparts are unmatched, especially at sunset, when the Pink City is bathed in golden light. Whether it’s a quiet stroll along the fort’s walls or a moment of reflection with the city stretched out below, Nahargarh offers a serene yet awe-inspiring experience."
+    },
+    {
+        "title": "Sheesh Mahal",
+        "video": "http://127.0.0.1:8000/static/rajasthan/jaipur/sheesh_mahal.mp4",
+        "description": "Step into the Sheesh Mahal, and you are instantly transported into a glittering world of royalty. With thousands of tiny mirrors that reflect the light of a single candle, the Sheesh Mahal sparkles like a galaxy of stars. It’s a place of romance, where the play of light and reflection creates an atmosphere of magic and wonder, making every moment feel like a royal affair."
+    },
+    {
+        "title": "Jal Mahal",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/jal mahal.jpeg",
+        "description": "A palace that seems to float on water, Jal Mahal is a sight to behold as the sun sets behind it. Imagine gliding across Man Sagar Lake, with the cool breeze against your skin, as the golden light of dusk casts its reflection on the serene waters. The tranquil beauty of Jal Mahal offers a quiet retreat from the bustle of the city, making it a must-visit experience."
+    }, 
+    {
+        "title": "City Palace",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/City Palace.webp",
+        "description": "At the heart of Jaipur lies the City Palace, a living testament to the city’s royal heritage. Explore grand courtyards, lush gardens, and intricately decorated palaces, where the Maharajas once ruled in splendor. The palace also houses rare artifacts, from royal garments to ancient manuscripts, offering an intimate glimpse into the opulent lives of Rajasthan’s royals. Every corner of the City Palace whispers tales of a bygone era, making it a luxurious journey into the past."
+    }, 
+    {
+        "title": "Albert Hall Museum (Night View)",
+        "image": "http://127.0.0.1:8000/static/rajasthan/jaipur/Albert_Hall_Museum_Night_View.jpg",
+        "description": "The Albert Hall Museum is a treasure trove of art and history housed in an architectural marvel. The Indo-Saracenic design and intricate stonework are worth admiring in themselves, but step inside, and you’ll be transported through centuries of Rajasthani and global history. From delicate miniature paintings to Egyptian mummies, the museum offers a world-class experience for the curious traveler."
     }
 ]
