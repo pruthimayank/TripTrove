@@ -15,7 +15,7 @@
                 {% for booking in booking_history %}
                     {% if booking.slot_start > current_date %}
                         {% with upcoming_found=True %}
-                        <div class="row mx-2 my-4 rounded-2" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url('{{ booking.image_url }}'); background-size: cover; background-repeat: no-repeat;">
+                        <div class="row mx-2 my-4 rounded-2" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url(https://res.cloudinary.com/chatgixbot/image/upload/v1725441469/gn5jzqnt14shpk8tckb4.jpg ); background-size: cover; background-repeat: no-repeat;">
                             <div class="col-md-7 mt-2">
                                 <section class="how-we-work px-2 rounded-2">
                                     <div class="d-flex flex-column justify-content-center p-2 h-100">
@@ -67,11 +67,11 @@
                 {% endfor %}
                 
                 <!-- Show message if no upcoming bookings -->
-                {% if not upcoming_found %}
+                {% comment %} {% if not upcoming_found %}
                     <div class="text-center">
                         <h1>No upcoming bookings found.</h1>
                     </div>
-                {% endif %}
+                {% endif %} {% endcomment %}
             {% endwith %}
         </section>
 
@@ -82,7 +82,7 @@
                 {% for booking in booking_history %}
                     {% if booking.slot_end <= current_date %}
                         {% with previous_found=True %}
-                        <div class="row mx-2 my-4 rounded-2" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url('{{ booking.image_url }}'); background-size: cover;">
+                        <div class="row mx-2 my-4 rounded-2" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url(https://static.vecteezy.com/system/resources/thumbnails/026/542/204/small_2x/landscape-natural-beautiful-mountains-and-blue-sky-panorama-photo.jpg); background-size: cover;">
                             <div class="col-md-7 mt-2">
                                 <section class="how-we-work px-2 rounded-2">
                                     <div class="d-flex flex-column justify-content-center p-2 h-100">
@@ -134,9 +134,9 @@
                 {% endfor %}
 
                 <!-- Show message if no previous bookings -->
-                {% if not previous_found %}
+                {% comment %} {% if not previous_found %}
                     <p>No previous bookings found.</p>
-                {% endif %}
+                {% endif %} {% endcomment %}
             {% endwith %}
         </section>
     </main>
