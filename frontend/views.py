@@ -138,7 +138,7 @@ def bookings(request):
             booking['slot_end'] = datetime.strptime(booking['slot_end'], '%Y-%m-%d').date()
 
         return render(request, 'bookings.html', {
-            'user': user,
+            'user': user, 
             'login': login,
             'current_date': current_date, 
             'booking_history': booking_history  
