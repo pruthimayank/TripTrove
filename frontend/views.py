@@ -129,18 +129,18 @@ def bookings(request):
 
         for booking in booking_history:
          if booking.get('slot_start'):
-            slot_start_str = booking['slot_start'].strip()  # Strip any extra spaces
-            if len(slot_start_str.split('/')[-1]) == 2:  # If year is two digits
-                slot_start_str = slot_start_str[:-2] + '20' + slot_start_str[-2:]  # Prepend '20' to make it a four-digit year
+            slot_start_str = booking['slot_start'].strip() 
+            if len(slot_start_str.split('/')[-1]) == 2:  
+                slot_start_str = slot_start_str[:-2] + '20' + slot_start_str[-2:]  
             
-            booking['slot_start'] = datetime.strptime(slot_start_str, '%d/%m/%Y').date()  # Now using four-digit year
+            booking['slot_start'] = datetime.strptime(slot_start_str, '%d/%m/%Y').date()  
             
         if booking.get('slot_end'):
-            slot_end_str = booking['slot_end'].strip()  # Strip any extra spaces
+            slot_end_str = booking['slot_end'].strip() 
             if len(slot_end_str.split('/')[-1]) == 2:
                 slot_end_str = slot_end_str[:-2] + '20' + slot_end_str[-2:]
             
-            booking['slot_end'] = datetime.strptime(slot_end_str, '%d/%m/%Y').date()  # Now using four-digit year
+            booking['slot_end'] = datetime.strptime(slot_end_str, '%d/%m/%Y').date()  
 
 
 
@@ -238,7 +238,7 @@ def handle_booking(request):
                 gender = tourist.get('gender')
                 passenger_contact = tourist.get('passengerContact')
                 guardian_contact = tourist.get('guardianContact')
-
+                package_name = tourist.get('packageName')
                 if not (first_name and last_name and passenger_contact):
                     return JsonResponse({'status': 'error', 'message': 'Missing required fields for tourist'}, status=400)
 
@@ -251,7 +251,8 @@ def handle_booking(request):
                     'guardian_contact': guardian_contact,
                     'slot_start': data.get('slot_start'),
                     'slot_end': data.get('slot_end'),
-                    'total_amount': data.get('total_amount')
+                    'total_amount': data.get('total_amount'),
+                    'package_name': package_name
                 }
 
                 booking_history.append(new_booking)

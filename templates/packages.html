@@ -108,26 +108,17 @@
                                         <option value="3" selected>10/10/2024 - 14/10/2024</option>
                                         <option value="4">16/10/2024 - 20/10/2024</option>
                                     </select>
-                                                               
                                 </div>
                             </div>
                             <br>
                             <div class="d-flex flex-wrap align-items-center justify-content-between">
                                 <h4 class="mt-2">Tourists:</h4>
                                 <div>
-                                    <select class="form-select touristDropdown" style="width: 300px;" onchange="updateTotalPrice()">
-                                        <option value="1">1</option>
-                                        <option value="2" selected>2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <!-- You can add more options -->
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                    </select>                                
+                                    <div class="input-group mb-3" style="width: 300px;">
+                                        <button class="btn btn-outline-secondary" type="button" id="subtractTourist" onclick="updateTouristCount(-1)">-</button>
+                                        <input type="text" class="form-control text-center" id="touristCount" value="2" readonly>
+                                        <button class="btn btn-outline-secondary" type="button" id="addTourist" onclick="updateTouristCount(1)">+</button>
+                                    </div>
                                 </div>
                             </div>
                             <br>
@@ -147,7 +138,8 @@
                             </div>
                         </div>
                         <div class="mt-2 border border-light rounded-2 p-3" style="background-color: #00000055;">
-                            <button type="button" class="btn btn-light w-100 my-2 {{i.name}}check" id="checkoutButton" data-bs-toggle="modal" data-bs-target="#addTouristModal" disabled>Checkout</button>
+                            <button type="button" class="btn btn-light w-100 my-2 {{i.name}}check" id="checkoutButton" data-bs-toggle="modal" data-bs-target="#addTouristModal"
+                            data-package-name="{{i.name}}" data-package-price="{{i.price}}" disabled>Checkout</button>
                             <button type="button" class="btn btn-light w-100 my-2">View Package</button>
                         </div>
                     </div>
@@ -296,22 +288,6 @@
                 <!-- Add number of tourists and slot selection -->
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="numberOfTourists">Number of Tourists:</label>
-                        <select class="form-select touristDropdown" id="numberOfTourists" style="width: 100%;" onchange="updateTotalPriceInModal()">
-                            <option value="1">1</option>
-                            <option value="2" selected>2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <!-- You can add more options -->
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
                         <label for="slotSelection">Select Slot:</label>
                         <select class="form-select" id="slotSelection" style="width: 100%;">
                                 <option value="1" disabled>27/09/2024 - 30/09/2024</option>
@@ -329,6 +305,7 @@
                         <h4 id="totalPriceDisplayModal">₹0</h4>
                     </div>
                 </div>
+                <input type="hidden" id="selectedPackageName" value="{{i.name}}">
 
                 <div class="mt-5">
                   <button type="button" class="btn btn-dark" id="saveAndAddMoreBtn" onclick="saveTouristDetails()">+ Save and Add More</button>
@@ -363,7 +340,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // The showcheckbox function to toggle the checkout button
+    let touristCount = 2;
+    let touristData = [];
+    let totalPrice = 0;
+    let pricePerTourist = 0; 
+    let slotStart = null;
+    let slotEnd = null;
+
     function showcheckbox(name) {
         const checkbox = document.querySelector(`.${name}check`);
         if (checkbox) {
@@ -371,39 +354,29 @@
         }
     }
 
-    let touristData = [];
-    let totalPrice = 0;
-    let pricePerTourist = "{{ i.price }}"; 
-    let slotStart = null;
-    let slotEnd = null;
+    // Event handler to open the modal and fetch package data
+    $('#addTouristModal').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget);
+        const packageName = button.data('package-name');
+        pricePerTourist = button.data('package-price');
 
-    function updateTotalPrice() {
-        const numberOfTourists = document.querySelector('.touristDropdown').value; // No limit on tourists
-        totalPrice = numberOfTourists * pricePerTourist;
-        document.querySelector('.totalPriceDisplay').innerText = `₹${totalPrice}`;
+        document.getElementById('selectedPackageName').value = packageName;
+        updateTotalPriceInModal();
+    });
+
+    function updateTouristCount(change) {
+        touristCount += change;
+        if (touristCount < 1) touristCount = 1; // Prevent negative or zero tourists
+        document.getElementById('touristCount').value = touristCount;
+        updateTotalPriceInModal();
     }
 
     function updateTotalPriceInModal() {
-        const numberOfTourists = document.getElementById('numberOfTourists').value; // No limit on tourists
-        totalPrice = numberOfTourists * pricePerTourist;
+        totalPrice = touristCount * pricePerTourist;
         document.getElementById('totalPriceDisplayModal').innerText = `₹${totalPrice}`;
     }
 
-    function openTouristModal() {
-        document.getElementById('totalPriceDisplayModal').innerText = `Total Price: ₹${totalPrice}`;
-
-        $('#addTouristModal').modal('show'); // Show the modal
-    }
-
     function saveTouristDetails() {
-        const numberOfTourists = document.getElementById('numberOfTourists').value;
-    
-        // Check if more tourists can be added based on the dropdown value
-        if (touristData.length >= numberOfTourists) {
-            alert("Maximum number of tourists reached.");
-            return;
-        }
-    
         const firstName = document.getElementById('firstName').value;
         const lastName = document.getElementById('lastName').value;
         const age = document.getElementById('age').value;
@@ -415,7 +388,8 @@
         const slotParts = selectedSlot.split(' - ');
         slotStart = slotParts[0];
         slotEnd = slotParts[1];
-    
+        const packageName = document.getElementById('selectedPackageName').value;
+
         if (firstName && lastName && age && passengerContact) {
             const tourist = {
                 firstName,
@@ -426,27 +400,23 @@
                 guardianContact,
                 slot_start: slotStart,
                 slot_end: slotEnd,
+                package_name: packageName,
                 total_amount: totalPrice
             };
-    
-            touristData.push(tourist);  // Add tourist to the array
-    
-            document.getElementById('addTouristForm').reset();  // Reset the form
-    
-            // Enable the Book Now button if the correct number of tourists have been added
-            if (touristData.length == numberOfTourists) {
-                document.getElementById('bookNowBtn').disabled = false;
-            }
+
+            touristData.push(tourist);
+
+            document.getElementById('addTouristForm').reset();
+            document.getElementById('bookNowBtn').disabled = false;
         } else {
             alert('Please fill out all required fields.');
         }
     }
-    
+
     function handleBookNow() {
-        saveTouristDetails()
-            $('#addTouristModal').modal('hide'); // Hide the tourist modal
-            showBookingSummary();  // Show the booking summary modal directly
-        
+        saveTouristDetails();
+        $('#addTouristModal').modal('hide');
+        showBookingSummary();
     }
 
     function showBookingSummary() {
@@ -457,18 +427,18 @@
 
         summaryHtml += `<p>Total Price: ₹${totalPrice}</p>`;
         document.getElementById('bookingSummary').innerHTML = summaryHtml;
-        $('#bookingSummaryModal').modal('show'); // Show the summary modal
+        $('#bookingSummaryModal').modal('show');
     }
 
-
     function confirmBooking() {
+        const packageName = document.getElementById('selectedPackageName').value;
         fetch('/booking/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCSRFToken(),
             },
-            body: JSON.stringify({ tourists: touristData, slot_start: slotStart, slot_end: slotEnd, total_price: totalPrice })
+            body: JSON.stringify({ tourists: touristData, slot_start: slotStart, slot_end: slotEnd, total_price: totalPrice, package_name: packageName })
         })
         .then(response => response.json())
         .then(data => {
