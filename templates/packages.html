@@ -102,19 +102,20 @@
                             <div class="d-flex flex-wrap align-items-center justify-content-between">
                                 <h4 class="mt-2">Select Slot:</h4>
                                 <div>
-                                    <select class="form-select" style="width: 300px;">
-                                        <option value="1" disabled title="Slot already booked">27/9/24 - 30/9/24</option>
-                                        <option value="2" disabled title="Slot already booked">1/10/24 - 5/10/24</option>
-                                        <option value="3">10/10/24 - 14/10/24</option>
-                                        <option value="4">16/10/24 - 20/10/24</option>
-                                    </select>                                
+                                    <select class="form-select" id="slotSelection" style="width: 300px;">
+                                        <option value="1" disabled>27/09/2024 - 30/09/2024</option>
+                                        <option value="2" disabled>01/10/2024 - 05/10/2024</option>
+                                        <option value="3" selected>10/10/2024 - 14/10/2024</option>
+                                        <option value="4">16/10/2024 - 20/10/2024</option>
+                                    </select>
+                                                               
                                 </div>
                             </div>
                             <br>
                             <div class="d-flex flex-wrap align-items-center justify-content-between">
                                 <h4 class="mt-2">Tourists:</h4>
                                 <div>
-                                    <select class="form-select" class="touristDropdown" style="width: 300px;">
+                                    <select class="form-select touristDropdown" style="width: 300px;" onchange="updateTotalPrice()">
                                         <option value="1">1</option>
                                         <option value="2" selected>2</option>
                                         <option value="3">3</option>
@@ -122,6 +123,7 @@
                                         <option value="5">5</option>
                                         <option value="6">6</option>
                                         <option value="7">7</option>
+                                        <!-- You can add more options -->
                                         <option value="8">8</option>
                                         <option value="9">9</option>
                                         <option value="10">10</option>
@@ -263,7 +265,7 @@
                       <label for="others">Others</label>
                     </div>
                 </div>
-      
+
                 <div class="row">
                   <div class="col-md-6 mb-3">
                     <input type="text" class="form-control border" id="firstName" placeholder="First & Middle Name">
@@ -272,7 +274,7 @@
                     <input type="text" class="form-control border" id="lastName" placeholder="Last Name">
                   </div>
                 </div>
-      
+
                 <div class="row">
                   <div class="col-md-3 mb-3">
                     <input type="number" class="form-control border" id="age" placeholder="Age">
@@ -281,7 +283,7 @@
                     <input type="text" class="form-control border" id="medicalConcerns" placeholder="Any severe medical concerns?">
                   </div>
                 </div>
-      
+
                 <div class="row">
                   <div class="col-md-6 mb-3">
                     <input type="text" class="form-control border" id="passengerContact" placeholder="Passenger's contact no.">
@@ -290,7 +292,44 @@
                     <input type="text" class="form-control border" id="guardianContact" placeholder="Guardian's contact no.">
                   </div>
                 </div>
-      
+
+                <!-- Add number of tourists and slot selection -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="numberOfTourists">Number of Tourists:</label>
+                        <select class="form-select touristDropdown" id="numberOfTourists" style="width: 100%;" onchange="updateTotalPriceInModal()">
+                            <option value="1">1</option>
+                            <option value="2" selected>2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <!-- You can add more options -->
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="slotSelection">Select Slot:</label>
+                        <select class="form-select" id="slotSelection" style="width: 100%;">
+                                <option value="1" disabled>27/09/2024 - 30/09/2024</option>
+                                <option value="2" disabled>01/10/2024 - 05/10/2024</option>
+                                <option value="3" selected>10/10/2024 - 14/10/2024</option>
+                                <option value="4">16/10/2024 - 20/10/2024</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Total price -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label>Total Price:</label>
+                        <h4 id="totalPriceDisplayModal">₹0</h4>
+                    </div>
+                </div>
+
                 <div class="mt-5">
                   <button type="button" class="btn btn-dark" id="saveAndAddMoreBtn" onclick="saveTouristDetails()">+ Save and Add More</button>
                   <button type="button" class="btn btn-outline-dark" id="bookNowBtn" onclick="handleBookNow()">Book Now</button>
@@ -324,31 +363,59 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // The showcheckbox function
+    // The showcheckbox function to toggle the checkout button
     function showcheckbox(name) {
         const checkbox = document.querySelector(`.${name}check`);
         if (checkbox) {
             checkbox.disabled = !checkbox.disabled;
         }
     }
+
     let touristData = [];
-    
+    let totalPrice = 0;
+    let pricePerTourist = "{{ i.price }}"; 
+    let slotStart = null;
+    let slotEnd = null;
+
+    function updateTotalPrice() {
+        const numberOfTourists = document.querySelector('.touristDropdown').value; // No limit on tourists
+        totalPrice = numberOfTourists * pricePerTourist;
+        document.querySelector('.totalPriceDisplay').innerText = `₹${totalPrice}`;
+    }
+
+    function updateTotalPriceInModal() {
+        const numberOfTourists = document.getElementById('numberOfTourists').value; // No limit on tourists
+        totalPrice = numberOfTourists * pricePerTourist;
+        document.getElementById('totalPriceDisplayModal').innerText = `₹${totalPrice}`;
+    }
+
     function openTouristModal() {
-        // Reset tourist data if needed when opening the modal for the first time
-        document.getElementById('saveAndAddMoreBtn').disabled = false;
-        document.getElementById('bookNowBtn').style.display = 'block'; // Ensure "Book Now" button is visible
+        document.getElementById('totalPriceDisplayModal').innerText = `Total Price: ₹${totalPrice}`;
+
         $('#addTouristModal').modal('show'); // Show the modal
     }
 
     function saveTouristDetails() {
+        const numberOfTourists = document.getElementById('numberOfTourists').value;
+        
+        // Check if more tourists can be added based on the dropdown value
+        if (touristData.length >= numberOfTourists) {
+            alert("Maximum number of tourists reached.");
+            return;
+        }
+    
         const firstName = document.getElementById('firstName').value;
         const lastName = document.getElementById('lastName').value;
         const age = document.getElementById('age').value;
         const gender = document.querySelector('input[name="gender"]:checked').value;
         const passengerContact = document.getElementById('passengerContact').value;
         const guardianContact = document.getElementById('guardianContact').value;
-
-        // Check if all required fields are filled
+        const slotDropdown = document.getElementById('slotSelection');
+        const selectedSlot = slotDropdown.options[slotDropdown.selectedIndex].text;
+        const slotParts = selectedSlot.split(' - ');
+        slotStart = slotParts[0];
+        slotEnd = slotParts[1];
+    
         if (firstName && lastName && age && passengerContact) {
             const tourist = {
                 firstName,
@@ -357,36 +424,44 @@
                 gender,
                 passengerContact,
                 guardianContact,
+                slot_start: slotStart,
+                slot_end: slotEnd,
+                total_amount: totalPrice
             };
-
-            touristData.push(tourist); // Store the tourist data in the array
-
-            // Reset the form for the next tourist entry
-            document.getElementById('addTouristForm').reset();
-
-            // Keep the modal open so users can continue adding tourists
-            $('#addTouristModal').modal('show');
+    
+            touristData.push(tourist);  // Add tourist to the array
+    
+            document.getElementById('addTouristForm').reset();  // Reset the form
+    
+            // Enable the Book Now button if the correct number of tourists have been added
+            if (touristData.length == numberOfTourists) {
+                document.getElementById('bookNowBtn').disabled = false;
+            }
         } else {
             alert('Please fill out all required fields.');
+        }
+    }
+    
+    function handleBookNow() {
+        if (touristData.length == document.getElementById('numberOfTourists').value) {
+            $('#addTouristModal').modal('hide'); // Hide the tourist modal
+            showBookingSummary();  // Show the booking summary modal directly
+        } else {
+            alert('Please add the required number of tourists.');
         }
     }
 
     function showBookingSummary() {
         let summaryHtml = '';
         touristData.forEach((tourist, index) => {
-            summaryHtml += `
-                <p>Tourist ${index + 1}: ${tourist.firstName} ${tourist.lastName}, Age: ${tourist.age}, Contact: ${tourist.passengerContact}</p>
-            `;
+            summaryHtml += `<p>Tourist ${index + 1}: ${tourist.firstName} ${tourist.lastName}, Age: ${tourist.age}, Contact: ${tourist.passengerContact}, Slot: ${tourist.slot_start} - ${tourist.slot_end}</p>`;
         });
+
+        summaryHtml += `<p>Total Price: ₹${totalPrice}</p>`;
         document.getElementById('bookingSummary').innerHTML = summaryHtml;
-        $('#bookingSummaryModal').modal('show'); 
+        $('#bookingSummaryModal').modal('show'); // Show the summary modal
     }
 
-    function handleBookNow() {
-        saveTouristDetails();
-        $('#addTouristModal').modal('hide');
-        showBookingSummary(); 
-    }
 
     function confirmBooking() {
         fetch('/booking/', {
@@ -395,9 +470,8 @@
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCSRFToken(),
             },
-            body: JSON.stringify({ tourists: touristData })
+            body: JSON.stringify({ tourists: touristData, slot_start: slotStart, slot_end: slotEnd, total_price: totalPrice })
         })
-        
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
@@ -410,12 +484,12 @@
             console.error('Error:', error);
         });
     }
-    
 
     function getCSRFToken() {
         return document.querySelector('[name=csrfmiddlewaretoken]').value;
     }
 </script>
+
 <!-- Add jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Add Bootstrap JS -->

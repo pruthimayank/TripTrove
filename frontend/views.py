@@ -128,11 +128,21 @@ def bookings(request):
         current_date = datetime.now().date()
 
         for booking in booking_history:
-            # Safely check if 'slot_start' and 'slot_end' are not None before parsing
-            if booking.get('slot_start'):
-                booking['slot_start'] = datetime.strptime(booking['slot_start'], '%Y-%m-%d').date()
-            if booking.get('slot_end'):
-                booking['slot_end'] = datetime.strptime(booking['slot_end'], '%Y-%m-%d').date()
+         if booking.get('slot_start'):
+            slot_start_str = booking['slot_start'].strip()  # Strip any extra spaces
+            if len(slot_start_str.split('/')[-1]) == 2:  # If year is two digits
+                slot_start_str = slot_start_str[:-2] + '20' + slot_start_str[-2:]  # Prepend '20' to make it a four-digit year
+            
+            booking['slot_start'] = datetime.strptime(slot_start_str, '%d/%m/%Y').date()  # Now using four-digit year
+            
+        if booking.get('slot_end'):
+            slot_end_str = booking['slot_end'].strip()  # Strip any extra spaces
+            if len(slot_end_str.split('/')[-1]) == 2:
+                slot_end_str = slot_end_str[:-2] + '20' + slot_end_str[-2:]
+            
+            booking['slot_end'] = datetime.strptime(slot_end_str, '%d/%m/%Y').date()  # Now using four-digit year
+
+
 
         return render(request, 'bookings.html', {
             'user': user,

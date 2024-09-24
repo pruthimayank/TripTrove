@@ -14,13 +14,13 @@
     <main>
         <!-- Upcoming Bookings Section -->
         <section>
+
+            <br>
+            <br>
             <h2>Upcoming Bookings</h2>
             {% with upcoming_found=False %}
                 {% for booking in booking_history %}
-                    <!-- Debug info for troubleshooting -->
-                    <p>Booking Data: {{ booking }}</p>
-                    <p>Slot Start: {{ booking.slot_start }}</p>
-                    <p>Current Date: {{ current_date }}</p>
+                
                     
                     {% if booking.slot_start and booking.slot_start > current_date %}
                         {% with upcoming_found=True %}
