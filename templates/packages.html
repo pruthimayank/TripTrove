@@ -379,35 +379,38 @@
             `;
         });
         document.getElementById('bookingSummary').innerHTML = summaryHtml;
-        $('#bookingSummaryModal').modal('show'); // Show the booking summary modal
+        $('#bookingSummaryModal').modal('show'); 
     }
 
-    // "Book Now" button click handler
     function handleBookNow() {
-        $('#addTouristModal').modal('hide'); // Hide the "Add Tourist" modal
-        showBookingSummary(); // Show the booking summary
+        saveTouristDetails();
+        $('#addTouristModal').modal('hide');
+        showBookingSummary(); 
     }
 
     function confirmBooking() {
-        fetch('/handle-booking/', {
+        fetch('/booking/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCSRFToken(),
             },
-            body: JSON.stringify({ tourists: touristData }),
+            body: JSON.stringify({ tourists: touristData })
         })
-        .then(response => {
-            if (response.ok) {
-                window.location.href = '/bookings/?success=true';
+        
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                window.location.href = data.redirect;
             } else {
-                throw new Error('Booking failed');
+                alert('Booking failed: ' + data.message);
             }
         })
         .catch(error => {
             console.error('Error:', error);
         });
     }
+    
 
     function getCSRFToken() {
         return document.querySelector('[name=csrfmiddlewaretoken]').value;

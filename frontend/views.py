@@ -128,8 +128,11 @@ def bookings(request):
         current_date = datetime.now().date()
 
         for booking in booking_history:
-            booking['slot_start'] = datetime.strptime(booking['slot_start'], '%Y-%m-%d').date()
-            booking['slot_end'] = datetime.strptime(booking['slot_end'], '%Y-%m-%d').date()
+            # Safely check if 'slot_start' and 'slot_end' are not None before parsing
+            if booking.get('slot_start'):
+                booking['slot_start'] = datetime.strptime(booking['slot_start'], '%Y-%m-%d').date()
+            if booking.get('slot_end'):
+                booking['slot_end'] = datetime.strptime(booking['slot_end'], '%Y-%m-%d').date()
 
         return render(request, 'bookings.html', {
             'user': user,
@@ -201,23 +204,10 @@ def handle_booking(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
+            tourists = data.get('tourists')
 
-            first_name = data.get('first_name')
-            last_name = data.get('last_name')
-            slot_start = data.get('slot_start')
-            slot_end = data.get('slot_end')
-            total_amount = data.get('total_amount')
-
-            # Ensure all fields are present
-            if not (first_name and last_name and slot_start and slot_end and total_amount):
-                return JsonResponse({'status': 'error', 'message': 'Missing required fields'}, status=400)
-
-            # Convert slot_start and slot_end to date objects
-            try:
-                slot_start_date = datetime.strptime(slot_start, '%Y-%m-%d').date()
-                slot_end_date = datetime.strptime(slot_end, '%Y-%m-%d').date()
-            except ValueError:
-                return JsonResponse({'status': 'error', 'message': 'Invalid date format'}, status=400)
+            if not tourists:
+                return JsonResponse({'status': 'error', 'message': 'No tourists provided'}, status=400)
 
             # Ensure the user is logged in
             user_data = request.session.get('user_data')
@@ -230,22 +220,39 @@ def handle_booking(request):
             # Get the existing booking history (if available)
             booking_history = agent_instance.bookinghistory if agent_instance.bookinghistory else []
 
-            # Add the new booking
-            new_booking = {
-                'first_name': first_name,
-                'last_name': last_name,
-                'slot_start': slot_start_date.isoformat(),
-                'slot_end': slot_end_date.isoformat(),
-                'total_amount': total_amount
-            }
+            # Add the new booking for each tourist
+            for tourist in tourists:
+                first_name = tourist.get('firstName')
+                last_name = tourist.get('lastName')
+                age = tourist.get('age')
+                gender = tourist.get('gender')
+                passenger_contact = tourist.get('passengerContact')
+                guardian_contact = tourist.get('guardianContact')
 
-            booking_history.append(new_booking)
+                if not (first_name and last_name and passenger_contact):
+                    return JsonResponse({'status': 'error', 'message': 'Missing required fields for tourist'}, status=400)
+
+                new_booking = {
+                    'first_name': first_name,
+                    'last_name': last_name,
+                    'age': age,
+                    'gender': gender,
+                    'passenger_contact': passenger_contact,
+                    'guardian_contact': guardian_contact,
+                    'slot_start': data.get('slot_start'),
+                    'slot_end': data.get('slot_end'),
+                    'total_amount': data.get('total_amount')
+                }
+
+                booking_history.append(new_booking)
 
             # Save updated booking history
             agent_instance.bookinghistory = booking_history
             agent_instance.save()
 
-            return JsonResponse({'status': 'success', 'message': 'Booking confirmed'})
+            # Redirect to booking page after saving
+            request.session['latest_booking'] = booking_history[-len(tourists):]  # Save the latest tourists booking in session
+            return JsonResponse({'status': 'success', 'message': 'Booking confirmed', 'redirect': '/bookings/'})
 
         except json.JSONDecodeError as e:
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON format'}, status=400)
