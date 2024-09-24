@@ -117,7 +117,6 @@ def packages(request):
             'packages': packages_list
         }
         return render(request, 'packages.html', data)
-
 def bookings(request):
     user = request.session.get('user_data')
     login = request.session.get('login')
@@ -127,22 +126,19 @@ def bookings(request):
         booking_history = agent_instance.bookinghistory if agent_instance.bookinghistory else []
         current_date = datetime.now().date()
 
+        # Loop through the booking history
         for booking in booking_history:
-         if booking.get('slot_start'):
-            slot_start_str = booking['slot_start'].strip() 
-            if len(slot_start_str.split('/')[-1]) == 2:  
-                slot_start_str = slot_start_str[:-2] + '20' + slot_start_str[-2:]  
+            if 'slot_start' in booking and booking['slot_start']:
+                slot_start_str = booking['slot_start'].strip()
+                if len(slot_start_str.split('/')[-1]) == 2:
+                    slot_start_str = slot_start_str[:-2] + '20' + slot_start_str[-2:]
+                booking['slot_start'] = datetime.strptime(slot_start_str, '%d/%m/%Y').date()
             
-            booking['slot_start'] = datetime.strptime(slot_start_str, '%d/%m/%Y').date()  
-            
-        if booking.get('slot_end'):
-            slot_end_str = booking['slot_end'].strip() 
-            if len(slot_end_str.split('/')[-1]) == 2:
-                slot_end_str = slot_end_str[:-2] + '20' + slot_end_str[-2:]
-            
-            booking['slot_end'] = datetime.strptime(slot_end_str, '%d/%m/%Y').date()  
-
-
+            if 'slot_end' in booking and booking['slot_end']:
+                slot_end_str = booking['slot_end'].strip()
+                if len(slot_end_str.split('/')[-1]) == 2:
+                    slot_end_str = slot_end_str[:-2] + '20' + slot_end_str[-2:]
+                booking['slot_end'] = datetime.strptime(slot_end_str, '%d/%m/%Y').date()
 
         return render(request, 'bookings.html', {
             'user': user,
