@@ -397,7 +397,7 @@
 
     function saveTouristDetails() {
         const numberOfTourists = document.getElementById('numberOfTourists').value;
-        
+    
         // Check if more tourists can be added based on the dropdown value
         if (touristData.length >= numberOfTourists) {
             alert("Maximum number of tourists reached.");
@@ -443,12 +443,10 @@
     }
     
     function handleBookNow() {
-        if (touristData.length == document.getElementById('numberOfTourists').value) {
+        saveTouristDetails()
             $('#addTouristModal').modal('hide'); // Hide the tourist modal
             showBookingSummary();  // Show the booking summary modal directly
-        } else {
-            alert('Please add the required number of tourists.');
-        }
+        
     }
 
     function showBookingSummary() {
