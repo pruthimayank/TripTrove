@@ -1,0 +1,120 @@
+<head>
+    <title>Package</title>
+</head>
+{% extends 'base.html' %}
+
+{% load static %}
+{% block additional_css %}
+    <style>
+        /* Container for the video background */
+        .video-container {
+            position: relative;
+            height: 200vh; /* To cover both sections */
+        }
+        .video-container2 {
+            position: relative;
+            height: 100vh; /* To cover both sections */
+        }
+
+        /* Background video settings */
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Keep video behind everything */
+        }
+
+        .section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            z-index: 1; /* Ensure text is on top of video */
+            overflow: hidden; /* Prevent overflow */
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for better text visibility */
+            z-index: 0;
+        }
+
+        h1, p {
+            margin: 0;
+            padding: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .zoom {
+            transition: transform 1s ease;
+        }
+
+        .section-bg {
+            background-size: cover;
+            background-position: center;
+            height: 100vh; /* Full viewport height */
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="video-container">
+            <video autoplay muted loop id="background-video">
+                <source src="{{package.video}}" type="video/mp4">
+            </video>
+
+            <section class="section" id="city-name">
+                <div class="overlay"></div>
+                <h1 class="fade-in">{{package.name}}</h1>
+            </section>
+
+            <section class="section" id="city-description">
+                <div class="overlay"></div>
+                <p class="fade-in">{{package.description}}</p>
+            </section>
+        </div>
+
+        <div>
+            {% for itinerary in package.itineraries %}
+    <section class="normal-section border-bottom" style="overflow: hidden;">
+        <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('{{ itinerary.image }}');">
+            <div class="col text-center">
+            </div>
+        </div>
+    </section>
+    <section style="height: 100vh; background-color: #141414;" class="d-flex flex-column align-items-center justify-content-center">
+        <div style="position: relative; z-index: 1; text-align: center;">
+            <h1 style="transform: translateY(-15px); font-size: 8vh; font-family:serif;">{{itinerary.title}}</h1>
+            <h4 class="cinzel mx-4">{{itinerary.description}}</h4>
+        </div>
+    </section>
+{% empty %}
+    <section class="normal-section border-bottom" style="overflow: hidden;">
+        <div class="row justify-content-center align-items-center h-100 section-bg zoom" style="background-image: url('https://picsum.photos/800/400');">
+            <div class="col text-center">
+                <h1>No itineraries available</h1>
+            </div>
+        </div>
+    </section>
+{% endfor %}
+            
+        </div>
+    </main>
+{% endblock %}
+
+{% block additional_js %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    
+{% endblock %}
